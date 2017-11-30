@@ -1,5 +1,7 @@
 package br.ifrn.poo.JFinancas;
 
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,7 +15,7 @@ package br.ifrn.poo.JFinancas;
 public class Usuario {
     private float saldo;
     private String nome;
-    private Registradora registradora[];
+    private ArrayList<Registradora> registradoras;
     
     public void addRegistradora(Registradora reg){
         

@@ -1,5 +1,7 @@
 package br.ifrn.poo.JFinancas;
 
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,7 +13,9 @@ package br.ifrn.poo.JFinancas;
  * @author rute
  */
 public class Registradora {
-    private Movimentacao movimentacao[];
+    private ArrayList<Movimentacao> movimentacoes;
+    private ArrayList<Limitador> limitadores;
+
     
     public void novaMovimentacao(){
         
