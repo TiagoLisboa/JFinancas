@@ -1,3 +1,5 @@
+package br.ifrn.poo.JFinancas;
+
 
 import java.util.Date;
 

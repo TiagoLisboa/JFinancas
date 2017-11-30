@@ -1,3 +1,5 @@
+package br.ifrn.poo.JFinancas;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,14 +10,6 @@
  *
  * @author rute
  */
-public class Registradora {
-    private Movimentacao movimentacao[];
+public class Meta extends Limitador {
     
-    public void novaMovimentacao(){
-        
-    }
-    
-    public void removerMovimentacao(){
-        
-    }
 }

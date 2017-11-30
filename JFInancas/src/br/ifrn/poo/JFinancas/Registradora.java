@@ -1,3 +1,5 @@
+package br.ifrn.poo.JFinancas;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,16 +10,14 @@
  *
  * @author rute
  */
-public class Usuario {
-    private float saldo;
-    private String nome;
-    private Registradora registradora[];
+public class Registradora {
+    private Movimentacao movimentacao[];
     
-    public void addRegistradora(Registradora reg){
+    public void novaMovimentacao(){
         
     }
     
-    public void removeRegistradora(Registradora reg){
+    public void removerMovimentacao(){
         
     }
 }
