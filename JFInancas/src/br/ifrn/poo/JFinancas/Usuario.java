@@ -17,11 +17,42 @@ public class Usuario {
     private String nome;
     private ArrayList<Registradora> registradoras;
     
-    public void addRegistradora(Registradora reg){
-        
+    public Usuario(float saldo, String nome) {
+		super();
+		this.saldo = saldo;
+		this.nome = nome;
+		this.registradoras = new ArrayList<Registradora>();
+	}
+
+	public float getSaldo() {
+		return saldo;
+	}
+
+
+
+	public void setSaldo(float saldo) {
+		this.saldo = saldo;
+	}
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+
+	public void addRegistradora(Registradora reg){
+        registradoras.add(reg);
     }
     
     public void removeRegistradora(Registradora reg){
-        
+        registradoras.remove(reg);
     }
 }

@@ -15,13 +15,25 @@ import java.util.ArrayList;
 public class Registradora {
     private ArrayList<Movimentacao> movimentacoes;
     private ArrayList<Limitador> limitadores;
-
     
-    public void novaMovimentacao(){
-        
+    public Registradora() {
+    	this.movimentacoes 	= new ArrayList<Movimentacao>();
+    	this.limitadores 	= new ArrayList<Limitador>();
+	}
+    
+    public void novaMovimentacao(Movimentacao mov){
+        movimentacoes.add(mov);
     }
     
-    public void removerMovimentacao(){
-        
+    public void removerMovimentacao(Movimentacao mov){
+    	movimentacoes.remove(mov);
+    }
+    
+    public void novoLimitador(Limitador lim){
+        limitadores.add(lim);
+    }
+    
+    public void removerLimitador(Limitador lim){
+        limitadores.remove(lim);
     }
 }
