@@ -1,4 +1,4 @@
-package br.ifrn.poo.JFinancas;
+package br.ifrn.poo.JFinancas.modelo;
 
 import java.util.Date;
 
@@ -12,11 +12,12 @@ import java.util.Date;
  *
  * @author rute
  */
-public class Gasto extends Movimentacao{
+public class Ganho extends Movimentacao{
 
-	public Gasto(Date data, float valor, String nome, String tipo) {
+	public Ganho(Date data, float valor, String nome, String tipo) {
 		super(data, valor, nome, tipo);
 		// TODO Auto-generated constructor stub
 	}
+	
     
 }

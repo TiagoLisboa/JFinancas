@@ -1,4 +1,4 @@
-package br.ifrn.poo.JFinancas;
+package br.ifrn.poo.JFinancas.modelo;
 
 
 import java.util.Date;
