@@ -15,13 +15,13 @@ import java.util.ArrayList;
 public class Usuario {
     private float saldo;
     private String nome;
-    private ArrayList<Registradora> registradoras;
+    private Registradora registradora;
     
     public Usuario(float saldo, String nome) {
 		super();
 		this.saldo = saldo;
 		this.nome = nome;
-		this.registradoras = new ArrayList<Registradora>();
+		this.registradora = new Registradora();
 	}
 
 	public float getSaldo() {
@@ -47,12 +47,7 @@ public class Usuario {
 	}
 
 
-
-	public void addRegistradora(Registradora reg){
-        registradoras.add(reg);
-    }
-    
-    public void removeRegistradora(Registradora reg){
-        registradoras.remove(reg);
-    }
+	public Registradora getRegistradora(){
+		return this.registradora;
+	}
 }
