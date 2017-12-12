@@ -28,12 +28,6 @@
 			<input type="submit">
 		</div>
 	</form>
-	<%
-	Usuario active = UsuarioController.getActiveUser();
-	if (active != null) {
-	%>
-		<h2><%= active.getNome () %></h2>
-	<% } %>
 	<br />
 	<table>
 	<thead>

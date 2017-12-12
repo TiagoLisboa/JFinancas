@@ -41,7 +41,7 @@ public class Registradora {
         limitadores.remove(lim);
     }
     
-    public ArrayList<Limitador> getLimitador () {
+    public ArrayList<Limitador> getLimitadores () {
     	return limitadores;
     }
 }
