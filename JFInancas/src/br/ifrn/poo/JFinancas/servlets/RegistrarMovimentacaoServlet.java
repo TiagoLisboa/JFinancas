@@ -15,6 +15,7 @@ import java.text.ParseException;
 
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.modelo.Gasto;
+import br.ifrn.poo.JFinancas.modelo.Ganho;
 
 @WebServlet("/registrarMovimentacao")
 public class RegistrarMovimentacaoServlet extends HttpServlet {
@@ -27,14 +28,18 @@ public class RegistrarMovimentacaoServlet extends HttpServlet {
 			String data = request.getParameter("data");
 			float valor = Float.parseFloat(request.getParameter("valor"));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date startDate = sdf.parse(data);
+			Date dataMovimentacao = sdf.parse(data);
 			String nome = request.getParameter("nome");
 			String tipo = request.getParameter("tipo");
 			String tipo2 = request.getParameter("tipo2");
 			if(tipo2.equals("Gasto")){
-				UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Gasto(startDate, valor, nome, tipo));
+				UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Gasto(dataMovimentacao, valor, nome, tipo));
+			} else {
+				UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Ganho(dataMovimentacao, valor, nome, tipo));
 			}
 		} catch(ParseException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

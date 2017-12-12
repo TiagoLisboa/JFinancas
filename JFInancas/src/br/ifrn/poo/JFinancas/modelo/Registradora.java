@@ -29,6 +29,10 @@ public class Registradora {
     	movimentacoes.remove(mov);
     }
     
+    public ArrayList<Movimentacao> getMovimentacoes () {
+    	return movimentacoes;
+    }
+    
     public void novoLimitador(Limitador lim){
         limitadores.add(lim);
     }
