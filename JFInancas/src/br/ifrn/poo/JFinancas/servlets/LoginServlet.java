@@ -29,8 +29,7 @@ public class LoginServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/Usuario.jsp");
-		rd.forward(request, response);
+		response.sendRedirect("Usuario.jsp");
 	}
 
 }

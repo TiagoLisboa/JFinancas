@@ -4,6 +4,7 @@
     	br.ifrn.poo.JFinancas.controle.UsuarioController,
     	br.ifrn.poo.JFinancas.modelo.Usuario,
     	br.ifrn.poo.JFinancas.modelo.Movimentacao,
+    	br.ifrn.poo.JFinancas.modelo.Ganho,
     	java.text.SimpleDateFormat" 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,6 +17,7 @@
 
 
 <%
+
 int offset;
 if (request.getParameter("offset") != null)
 	 offset = Integer.parseInt(request.getParameter("offset"));
@@ -24,110 +26,169 @@ else
 
 %>
 
-<a href="?offset=<%= offset-1 %>"> left </a>
-<a href="?offset=<%= offset+1 %>"> right </a>
+<div style="display: table; width: 100%;">
 
-<form action="registrarMovimentacao">
-	<label>
-		Data:<br>
-		<input type="date" name="data">
-		</br>
-	</label>
-	<label>
-		Valor:<br>
-		<input type="number" name="valor">
-		<br>
-	</label>
-	<label>
-		Nome:<br>
-		<input type="text" name="nome">
-		<br>
-	</label>
-	<label>
-		Tipo:<br>
-		<input type="text" name="tipo">
-		<br>
-	</label>
-		Tipo2:<br> <!-- categoria -->
-	<label>	
-		<input type="radio" value="Ganho" name="tipo2"> Ganho
-	</label>
-	<label>
-		<input type="radio" value="Gasto" name="tipo2"> Gasto
-		<br>
-	</label>	
-	<input type="submit">
-</form>
-<%
-
-Calendar now = Calendar.getInstance();
-
-SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-
-%>
-
-
-<table>
-<thead>
-	<tr>
-		<th>
-		Domingo
-		</th>
-		<th>
-		Segunda-feira
-		</th>
-		<th>
-		Terça-feira
-		</th>
-		<th>
-		Quarta-feira
-		</th>
-		<th>
-		Quinta-feira
-		</th>
-		<th>
-		Sexta-feira
-		</th>
-		<th>
-		Sábado
-		</th>
-	</tr>
-</thead>
-<tbody>
-	<tr>
+	<div style="width: 50%; float: left;">
+		<h3>Movimentações</h3>
+		<form action="registrarMovimentacao">
+			<label>
+				Data:<br>
+				<input type="date" name="data">
+				</br>
+			</label>
+			<label>
+				Valor:<br>
+				<input type="number" name="valor">
+				<br>
+			</label>
+			<label>
+				Nome:<br>
+				<input type="text" name="nome">
+				<br>
+			</label>
+			<label>
+				Tipo:<br>
+				<input type="text" name="tipo">
+				<br>
+			</label>
+				Categoria:
+			<label>	
+				<input type="radio" value="Ganho" name="categoria"> Ganho
+			</label>
+			<label>
+				<input type="radio" value="Gasto" name="categoria"> Gasto
+				<br>
+			</label>	
+			<input type="submit">
+		</form>
+	</div>
+	
+	<div style="width: 50%; float: left">
+	
 		<%
-
-		String[] days = new String[7];
-		int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 1 + 7*offset; //add 2 if your week start on monday
-		now.add(Calendar.DAY_OF_MONTH, delta );
-		for (int i = 0; i < 7; i++)
-		{
-		    days[i] = format.format(now.getTime());
-		    %>
-		    
-		    <td> <%
-		    for (Movimentacao m : UsuarioController.getActiveUser().getRegistradora().getMovimentacoes() ) {
-		    	if (format.format(m.getData()).equals(days[i])) {
-		    	%>
-		    	
-		    	<%=m.getNome() %><br />
-		    	
-		    	<%
-		    	}
-		    }
-		    %> </td>
-		    
-		    <%
-		    now.add(Calendar.DAY_OF_MONTH, 1);
-		}
+		
+		Calendar now = Calendar.getInstance();
+		
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		
 		%>
-	</tr>
-</tbody>
-</table>
+		
+		<h2> <%= UsuarioController.getActiveUser().getNome() %> - R$<%= UsuarioController.getActiveUser().getSaldo() %></h2>
+		
+		
+		<table border="1" style="width: 100%;">
+		<thead>
+			<tr>
+				<th></th>	
+				<th>
+				Domingo
+				</th>
+				<th>
+				Segunda-feira
+				</th>
+				<th>
+				Terça-feira
+				</th>
+				<th>
+				Quarta-feira
+				</th>
+				<th>
+				Quinta-feira
+				</th>
+				<th>
+				Sexta-feira
+				</th>
+				<th>
+				Sábado
+				</th>
+				<th></th>	
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+				<a href="?offset=<%= offset-1 %>"> < </a>
+				</td>
+				<%
+		
+				String[] days = new String[7];
+				int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 1 + 7*offset; //add 2 if your week start on monday
+				now.add(Calendar.DAY_OF_MONTH, delta );
+				for (int i = 0; i < 7; i++)
+				{
+				    days[i] = format.format(now.getTime());
+				    %>
+				    
+				    <td> <%
+				    for (Movimentacao m : UsuarioController.getActiveUser().getRegistradora().getMovimentacoes() ) {
+				    	if (format.format(m.getData()).equals(days[i])) {
+				    	%>
+				    	
+				    	<p style="color: <%= m instanceof Ganho ? "green" : "red" %>;"><%=m.getNome() %> - R$<%= m.getValor() %></p>
+				    	
+				    	<%
+				    	}
+				    }
+				    %> </td>
+				    
+				    <%
+				    now.add(Calendar.DAY_OF_MONTH, 1);
+				}
+				
+				%>
+				<td>
+					<a href="?offset=<%= offset+1 %>"> > </a>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
 
-<script>
+</div>
 
-</script>
+<hr />
+
+<div style="display: table;">
+	<div style="widht: 50%; float: left;">
+		<h3>Limitadores</h3>
+		<form action="registrarLimitador" method="post">
+			<label>
+				Data inicial:<br>
+				<input type="date" name="data1">
+				</br>
+			</label>
+			<label>
+				Data final:<br>
+				<input type="date" name="data2">
+				</br>
+			</label>
+			<label>
+				Valor:<br>
+				<input type="number" name="valor">
+				<br>
+			</label>
+			<label>
+				Nome:<br>
+				<input type="text" name="nome">
+				<br>
+			</label>
+			<label>
+				Tipo:<br>
+				<input type="text" name="tipo">
+				<br>
+			</label>
+				Categoria:
+			<label>	
+				<input type="radio" value="Teto" name="categoria"> Teto
+			</label>
+			<label>
+				<input type="radio" value="Meta" name="categoria"> Meta
+				<br>
+			</label>	
+			<input type="submit">
+		</form>
+	</div>
+</div>
+
 </body>
 </html>

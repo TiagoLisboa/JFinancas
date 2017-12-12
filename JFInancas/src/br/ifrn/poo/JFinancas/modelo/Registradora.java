@@ -40,4 +40,8 @@ public class Registradora {
     public void removerLimitador(Limitador lim){
         limitadores.remove(lim);
     }
+    
+    public ArrayList<Limitador> getLimitador () {
+    	return limitadores;
+    }
 }

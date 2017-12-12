@@ -23,8 +23,7 @@ public class AddUsuarioServlet extends HttpServlet {
 		if (nome != null || saldo != null) {
 			UsuarioController.registrarUsuario(nome, Float.parseFloat(saldo));
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-		rd.forward(request, response);
+		response.sendRedirect("Usuario.jsp");
 	}
 
 }

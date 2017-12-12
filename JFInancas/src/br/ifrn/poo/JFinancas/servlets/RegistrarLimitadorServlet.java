@@ -15,27 +15,30 @@ import java.text.ParseException;
 
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.modelo.Gasto;
+import br.ifrn.poo.JFinancas.modelo.Meta;
+import br.ifrn.poo.JFinancas.modelo.Teto;
 import br.ifrn.poo.JFinancas.modelo.Ganho;
 
-@WebServlet("/registrarMovimentacao")
-public class RegistrarMovimentacaoServlet extends HttpServlet {
+@WebServlet("/registrarLimitador")
+public class RegistrarLimitadorServlet extends HttpServlet {
 	@Override
 	protected void service (HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
 		
 		try {
-			String data = request.getParameter("data");
+			String data1 = request.getParameter("data1");
+			String data2 = request.getParameter("data2");
 			float valor = Float.parseFloat(request.getParameter("valor"));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date dataMovimentacao = sdf.parse(data);
-			String nome = request.getParameter("nome");
+			Date dataInicial = sdf.parse(data1);
+			Date dataFinal = sdf.parse(data2);
 			String tipo = request.getParameter("tipo");
 			String categoria = request.getParameter("categoria");
-			if(categoria.equals("Gasto")){
-				UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Gasto(dataMovimentacao, valor, nome, tipo));
+			if(categoria.equals("Teto")){
+				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Teto(valor, dataInicial, dataFinal, tipo));
 			} else {
-				UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Ganho(dataMovimentacao, valor, nome, tipo));
+				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Meta(valor, dataInicial, dataFinal, tipo));
 			}
 		} catch(ParseException e) {
 			e.printStackTrace();
