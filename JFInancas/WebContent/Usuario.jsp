@@ -32,37 +32,6 @@ else
 
 	<div style="width: 50%; float: left;">
 		<h3>Movimentações</h3>
-		<form action="registrarMovimentacao">
-			<label>
-				Data:<br>
-				<input type="date" name="data">
-				</br>
-			</label>
-			<label>
-				Valor:<br>
-				<input type="number" name="valor">
-				<br>
-			</label>
-			<label>
-				Nome:<br>
-				<input type="text" name="nome">
-				<br>
-			</label>
-			<label>
-				Tipo:<br>
-				<input type="text" name="tipo">
-				<br>
-			</label>
-				Categoria:
-			<label>	
-				<input type="radio" value="Ganho" name="categoria"> Ganho
-			</label>
-			<label>
-				<input type="radio" value="Gasto" name="categoria"> Gasto
-				<br>
-			</label>	
-			<input type="submit">
-		</form>
 	</div>
 	
 	<div style="width: 50%; float: left">
@@ -213,6 +182,14 @@ else
 				<td>
 					<a href="?offset=<%= offset+1 %>"> > </a>
 				</td>
+			</tr>
+			<tr><td></td>
+				<% for(int i=0;i<7;i++){ %>
+					<td>
+						<a href="movimentacao">+</a>
+					</td>
+				<% } %>
+				<td></td>
 			</tr>
 		</tbody>
 		</table>

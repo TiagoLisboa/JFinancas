@@ -1,30 +1,48 @@
 package br.ifrn.poo.JFinancas.servlets;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.text.ParseException;
-
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
-import br.ifrn.poo.JFinancas.modelo.Gasto;
 import br.ifrn.poo.JFinancas.modelo.Ganho;
+import br.ifrn.poo.JFinancas.modelo.Gasto;
 
-@WebServlet("/registrarMovimentacao")
-public class RegistrarMovimentacaoServlet extends HttpServlet {
-	@Override
-	protected void service (HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
-		
-		try {
+/**
+ * Servlet implementation class MovimentacaoServlet
+ */
+@WebServlet("/movimentacao")
+public class MovimentacaoServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public MovimentacaoServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.sendRedirect("NovaMovimentacao.jsp");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			try {
 			String data = request.getParameter("data");
 			float valor = Float.parseFloat(request.getParameter("valor"));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -45,5 +63,6 @@ public class RegistrarMovimentacaoServlet extends HttpServlet {
 		
 		response.sendRedirect("Usuario.jsp");
 	}
+	}
 
-}
+

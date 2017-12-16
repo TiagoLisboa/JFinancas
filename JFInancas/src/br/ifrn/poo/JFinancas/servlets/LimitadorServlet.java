@@ -1,31 +1,48 @@
 package br.ifrn.poo.JFinancas.servlets;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.text.ParseException;
-
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
-import br.ifrn.poo.JFinancas.modelo.Gasto;
 import br.ifrn.poo.JFinancas.modelo.Meta;
 import br.ifrn.poo.JFinancas.modelo.Teto;
-import br.ifrn.poo.JFinancas.modelo.Ganho;
 
-@WebServlet("/registrarLimitador")
-public class RegistrarLimitadorServlet extends HttpServlet {
-	@Override
-	protected void service (HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
-		
+/**
+ * Servlet implementation class LimitadorServlet
+ */
+@WebServlet("/LimitadorServlet")
+public class LimitadorServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LimitadorServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.sendRedirect("novoLimitador.jsp");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		try {
 			String data1 = request.getParameter("data1");
 			String data2 = request.getParameter("data2");
@@ -47,6 +64,7 @@ public class RegistrarLimitadorServlet extends HttpServlet {
 		}
 		
 		response.sendRedirect("Usuario.jsp");
+	
 	}
 
 }
