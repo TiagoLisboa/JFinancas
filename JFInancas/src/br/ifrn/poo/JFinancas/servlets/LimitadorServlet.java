@@ -18,7 +18,7 @@ import br.ifrn.poo.JFinancas.modelo.Teto;
 /**
  * Servlet implementation class LimitadorServlet
  */
-@WebServlet("/LimitadorServlet")
+@WebServlet("/novoLimitador")
 public class LimitadorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -46,6 +46,7 @@ public class LimitadorServlet extends HttpServlet {
 		try {
 			String data1 = request.getParameter("data1");
 			String data2 = request.getParameter("data2");
+			String nome = request.getParameter("nome");
 			float valor = Float.parseFloat(request.getParameter("valor"));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dataInicial = sdf.parse(data1);
@@ -53,9 +54,9 @@ public class LimitadorServlet extends HttpServlet {
 			String tipo = request.getParameter("tipo");
 			String categoria = request.getParameter("categoria");
 			if(categoria.equals("Teto")){
-				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Teto(valor, dataInicial, dataFinal, tipo));
+				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Teto(nome, valor, dataInicial, dataFinal, tipo));
 			} else {
-				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Meta(valor, dataInicial, dataFinal, tipo));
+				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Meta(nome, valor, dataInicial, dataFinal, tipo));
 			}
 		} catch(ParseException e) {
 			e.printStackTrace();

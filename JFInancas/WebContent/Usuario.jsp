@@ -29,11 +29,6 @@ else
 %>
 
 <div style="display: table; width: 100%;">
-
-	<div style="width: 50%; float: left;">
-		<h3>Movimentações</h3>
-	</div>
-	
 	<div style="width: 50%; float: left">
 	
 		<%
@@ -194,50 +189,46 @@ else
 		</tbody>
 		</table>
 	</div>
+	<div style="width: 50%; float: left">
+	<a href="novoLimitador">Novo Limitador</a>
+	<hr>
+		<table>
+		<thead>
+			<tr>
+			<th>
+			Limitador
+			</th>
+			<th>
+			Tipo
+			</th>
+			<th>
+			Valor
+			</th>
+			<th>
+			Inicio
+			</th>
+			<th>
+			Fim
+			</th>
+			<th>Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+		<% int idx = 0; for (Limitador l : UsuarioController.getActiveUser().getRegistradora().getLimitadores()) { %>
+			<tr style="color: <%= !( l instanceof  Teto ) ? "green" : "red" %>;">
 
-</div>
-
-<hr />
-
-<div style="display: table;">
-	<div style="widht: 50%; float: left;">
-		<h3>Limitadores</h3>
-		<form action="registrarLimitador" method="post">
-			<label>
-				Data inicial:<br>
-				<input type="date" name="data1">
-				</br>
-			</label>
-			<label>
-				Data final:<br>
-				<input type="date" name="data2">
-				</br>
-			</label>
-			<label>
-				Valor:<br>
-				<input type="number" name="valor">
-				<br>
-			</label>
-			<label>
-				Nome:<br>
-				<input type="text" name="nome">
-				<br>
-			</label>
-			<label>
-				Tipo:<br>
-				<input type="text" name="tipo">
-				<br>
-			</label>
-				Categoria:
-			<label>	
-				<input type="radio" value="Teto" name="categoria"> Teto
-			</label>
-			<label>
-				<input type="radio" value="Meta" name="categoria"> Meta
-				<br>
-			</label>	
-			<input type="submit">
-		</form>
+				<td><%= l.getNome() %></td>
+				<td><%= l.getTipo() %></td>
+				<td><%= l.getValor() %></td>
+				<td><%= format.format(l.getInicio()) %></td>
+				<td><%= format.format(l.getFim())%></td>
+				<td>
+				<a href="delLimitador?idx=<%=idx%>">Deletar</a>
+				</td>
+			</tr>
+		<%idx++; } %>
+		</tbody>
+		</table>
 	</div>
 </div>
 

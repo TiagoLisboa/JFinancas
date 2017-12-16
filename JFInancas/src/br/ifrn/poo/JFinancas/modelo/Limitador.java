@@ -11,11 +11,13 @@ public abstract class Limitador {
     private float valor;
     private Date inicio;
     private Date fim;
+    private String nome;
     private String tipo;
     
-	public Limitador(float valor, Date inicio, Date fim, String tipo) {
+	public Limitador(String nome, float valor, Date inicio, Date fim, String tipo) {
 		super();
 		this.valor = valor;
+		this.nome = nome;
 		this.inicio = inicio;
 		this.fim = fim;
 		this.tipo = tipo;
@@ -52,6 +54,14 @@ public abstract class Limitador {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-    
+
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
     
 }

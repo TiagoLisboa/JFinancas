@@ -8,20 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
-import br.ifrn.poo.JFinancas.exceptions.UsuarioNaoCadastradoException;
-import br.ifrn.poo.JFinancas.modelo.Usuario;
+import br.ifrn.poo.JFinancas.modelo.Limitador;
 
 /**
- * Servlet implementation class Abc
+ * Servlet implementation class DelLimitadorServlet
  */
-@WebServlet(urlPatterns = {"/login", "/"})
-public class LoginServlet extends HttpServlet {
+@WebServlet("/delLimitador")
+public class DelLimitadorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public DelLimitadorServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,22 +29,11 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("login.jsp");
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nome = request.getParameter("usr");
-		try {
-			Usuario usr = UsuarioController.recuperarUsuario(nome);
-			UsuarioController.setActiveUser(usr);
-		} catch (UsuarioNaoCadastradoException e) {
-			e.printStackTrace();
-			return;
-		}
+		// TODO Auto-generated method stub
+		int idx = Integer.parseInt(request.getParameter("idx"));
+		UsuarioController.getActiveUser().getRegistradora().getLimitadores().remove(idx);
 		response.sendRedirect("Usuario.jsp");
 	}
+
 
 }

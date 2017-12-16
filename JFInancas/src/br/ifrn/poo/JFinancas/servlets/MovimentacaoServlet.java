@@ -62,7 +62,7 @@ public class MovimentacaoServlet extends HttpServlet {
 		}
 		
 		response.sendRedirect("Usuario.jsp");
-	}
+		}	
 	}
 
 
