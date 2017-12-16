@@ -12,20 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
+import br.ifrn.poo.JFinancas.modelo.Limitador;
 import br.ifrn.poo.JFinancas.modelo.Meta;
 import br.ifrn.poo.JFinancas.modelo.Teto;
 
 /**
- * Servlet implementation class LimitadorServlet
+ * Servlet implementation class UpdateLimitadoresServlet
  */
-@WebServlet("/novoLimitador")
-public class LimitadorServlet extends HttpServlet {
+@WebServlet("/updateLimitador")
+public class UpdateLimitadoresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LimitadorServlet() {
+    public UpdateLimitadoresServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,15 +35,16 @@ public class LimitadorServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.sendRedirect("novoLimitador.jsp");
+		String idx = request.getParameter("idx");
+		System.out.println(request.getParameter("idx"));
+		response.sendRedirect("updateLimitador.jsp?idx="+idx);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		int idx = Integer.parseInt(request.getParameter("idx"));
 		try {
 			String data1 = request.getParameter("data1");
 			String data2 = request.getParameter("data2");
@@ -53,10 +55,11 @@ public class LimitadorServlet extends HttpServlet {
 			Date dataFinal = sdf.parse(data2);
 			String tipo = request.getParameter("tipo");
 			String categoria = request.getParameter("categoria");
+			
 			if(categoria.equals("Teto")){
-				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Teto(nome, valor, dataInicial, dataFinal, tipo));
+				UsuarioController.getActiveUser().getRegistradora().getLimitadores().set(idx, new Teto(nome, valor, dataInicial, dataFinal, tipo));
 			} else {
-				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Meta(nome, valor, dataInicial, dataFinal, tipo));
+				UsuarioController.getActiveUser().getRegistradora().getLimitadores().set(idx, new Meta(nome, valor, dataInicial, dataFinal, tipo));
 			}
 		} catch(ParseException e) {
 			e.printStackTrace();
@@ -65,7 +68,6 @@ public class LimitadorServlet extends HttpServlet {
 		}
 		
 		response.sendRedirect("Limitadores.jsp");
-	
 	}
 
 }

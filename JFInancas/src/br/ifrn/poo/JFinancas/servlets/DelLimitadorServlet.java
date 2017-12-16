@@ -32,7 +32,7 @@ public class DelLimitadorServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		int idx = Integer.parseInt(request.getParameter("idx"));
 		UsuarioController.getActiveUser().getRegistradora().getLimitadores().remove(idx);
-		response.sendRedirect("Usuario.jsp");
+		response.sendRedirect("Limitadores.jsp");
 	}
 
 

@@ -29,7 +29,7 @@ else
 %>
 
 <div style="display: table; width: 100%;">
-	<div style="width: 50%; float: left">
+	<div style="width: 80%; float: left">
 	
 		<%
 		
@@ -40,8 +40,9 @@ else
 		%>
 		
 		<h2> <%= UsuarioController.getActiveUser().getNome() %> - R$<%= UsuarioController.getActiveUser().getSaldo() %></h2>
-		
-		
+		<h2>
+		<a href="Limitadores.jsp">Limitadores</a>
+		</h2>		
 		<table border="1" style="width: 100%;">
 		<thead>
 			<tr>
@@ -189,47 +190,7 @@ else
 		</tbody>
 		</table>
 	</div>
-	<div style="width: 50%; float: left">
-	<a href="novoLimitador">Novo Limitador</a>
-	<hr>
-		<table>
-		<thead>
-			<tr>
-			<th>
-			Limitador
-			</th>
-			<th>
-			Tipo
-			</th>
-			<th>
-			Valor
-			</th>
-			<th>
-			Inicio
-			</th>
-			<th>
-			Fim
-			</th>
-			<th>Ações</th>
-			</tr>
-		</thead>
-		<tbody>
-		<% int idx = 0; for (Limitador l : UsuarioController.getActiveUser().getRegistradora().getLimitadores()) { %>
-			<tr style="color: <%= !( l instanceof  Teto ) ? "green" : "red" %>;">
-
-				<td><%= l.getNome() %></td>
-				<td><%= l.getTipo() %></td>
-				<td><%= l.getValor() %></td>
-				<td><%= format.format(l.getInicio()) %></td>
-				<td><%= format.format(l.getFim())%></td>
-				<td>
-				<a href="delLimitador?idx=<%=idx%>">Deletar</a>
-				</td>
-			</tr>
-		<%idx++; } %>
-		</tbody>
-		</table>
-	</div>
+	
 </div>
 
 </body>
