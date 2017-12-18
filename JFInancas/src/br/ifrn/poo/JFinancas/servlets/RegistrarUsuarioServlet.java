@@ -38,8 +38,9 @@ public class RegistrarUsuarioServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String nome = request.getParameter("nome");
-		String saldo = request.getParameter("saldo");	
-		UsuarioController.registrarUsuario(nome, Float.parseFloat(saldo));
+		String saldo = request.getParameter("saldo");
+		String passwd = request.getParameter("passwd");
+		UsuarioController.registrarUsuario(nome, Float.parseFloat(saldo), passwd);
 		response.sendRedirect("login.jsp");
 	}
 

@@ -11,12 +11,25 @@
 	<form action="login" method="post">
 		<label>
 			Nome:
-			<input type="text" name="usr" />
+			<input type="text" name="usr" value="<%= request.getAttribute("usuarioTentado") != null ?  request.getAttribute("usuarioTentado") : ""%>"/>
+			<%
+			if (request.getAttribute("usuarioIncorreto") != null) { %>
+				<p style="color: red">Usuario não encontrado</p>
+			<% } %>
 		</label>
+		<br />
+		<br />
+		<br />
 		<label>
 			Senha:
-			<input type="password" name="passwd" />
+			<input type="password" name="passwd" <%= request.getAttribute("senhaIncorreta") != null ? "autofocus" : ""  %> />
+			<% if (request.getAttribute("senhaIncorreta") != null) { %>
+				<p style="color: red">Senha incorreta</p>
+			<% } %>
 		</label>
+		<br />
+		<br />
+		<br />
 		<input type="submit">
 	</form>
 	<a href="/JFInancas/registrar">novo usuario</a>

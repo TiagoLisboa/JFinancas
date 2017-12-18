@@ -2,6 +2,7 @@ package br.ifrn.poo.JFinancas.controle;
 
 import java.util.ArrayList;
 
+import br.ifrn.poo.JFinancas.exceptions.SenhaIncorretaException;
 import br.ifrn.poo.JFinancas.exceptions.UsuarioNaoCadastradoException;
 import br.ifrn.poo.JFinancas.modelo.Usuario;
 
@@ -21,14 +22,19 @@ public class UsuarioController {
 		activeUser = usr;
 	}
 	
-	public static void registrarUsuario (String nome, float saldo) {
-		Usuario usr = new Usuario(saldo, nome);
+	public static void registrarUsuario (String nome, float saldo, String senha) {
+		Usuario usr = new Usuario(saldo, nome, senha);
 		usuarios.add(usr);
 	}
 	
-	public static Usuario recuperarUsuario (String nome) throws UsuarioNaoCadastradoException{
+	public static Usuario recuperarUsuario (String nome, String senha) 
+			throws UsuarioNaoCadastradoException, SenhaIncorretaException
+	{
 		for (Usuario usr : usuarios) {
-			if (usr.getNome().equals(nome)) return usr; 
+			if (usr.getNome().equals(nome)) {
+				if (usr.checkSenha(senha)) return usr;
+				else throw new SenhaIncorretaException();
+			} 
 		}
 		throw new UsuarioNaoCadastradoException();
 	}

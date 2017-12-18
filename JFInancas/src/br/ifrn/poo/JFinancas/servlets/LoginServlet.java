@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
+import br.ifrn.poo.JFinancas.exceptions.SenhaIncorretaException;
 import br.ifrn.poo.JFinancas.exceptions.UsuarioNaoCadastradoException;
 import br.ifrn.poo.JFinancas.modelo.Usuario;
 
@@ -36,13 +37,21 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		String nome = request.getParameter("usr");
+		String passwd = request.getParameter("passwd");
 		try {
-			Usuario usr = UsuarioController.recuperarUsuario(nome);
+			Usuario usr = UsuarioController.recuperarUsuario(nome, passwd);
 			UsuarioController.setActiveUser(usr);
 		} catch (UsuarioNaoCadastradoException e) {
-			e.printStackTrace();
+			request.setAttribute("usuarioIncorreto", true);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+			return;
+		} catch (SenhaIncorretaException e) {
+			request.setAttribute("senhaIncorreta", true);
+			request.setAttribute("usuarioTentado", nome);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 			return;
 		}
 		response.sendRedirect("Usuario.jsp");

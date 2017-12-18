@@ -15,14 +15,24 @@ import java.util.ArrayList;
 public class Usuario {
     private float saldo;
     private String nome;
+    private String senha;
     private Registradora registradora;
     
-    public Usuario(float saldo, String nome) {
+    public Usuario(float saldo, String nome, String senha) {
 		super();
 		this.saldo = saldo;
 		this.nome = nome;
+		this.senha = senha;
 		this.registradora = new Registradora();
 	}
+    
+    public boolean checkSenha (String senha) {
+    	return this.senha.equals(senha);
+    }
+    
+    public void setSenha (String senha) {
+    	this.senha = senha;
+    }
 
 	public float getSaldo() {
 		return saldo;
