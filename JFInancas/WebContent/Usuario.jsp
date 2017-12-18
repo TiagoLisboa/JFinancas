@@ -17,7 +17,7 @@ if (UsuarioController.getActiveUser() == null) {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Título</title>
 </head>
 <body>
 
@@ -197,6 +197,7 @@ else
 	
 </div>
 <h4>Limitadores</h4>
+<a href="Extrato.jsp"><h4>Gerar extrato</h4></a>
 <table>
 	<% for (Limitador l : UsuarioController.getActiveUser().getRegistradora().getLimitadores()) {
 		float t = l.calcularTransacoes(UsuarioController.getActiveUser().getRegistradora().getMovimentacoes()); 

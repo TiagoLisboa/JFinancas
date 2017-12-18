@@ -53,6 +53,7 @@ if (UsuarioController.getActiveUser() == null) {
 			</label>	
 			<input type="submit">
 		</form>
+		<a href="Limitadores.jsp"> Voltar </a>
 </body>
 </html>
 <% } %>

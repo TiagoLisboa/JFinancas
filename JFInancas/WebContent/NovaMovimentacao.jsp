@@ -53,6 +53,7 @@ if (UsuarioController.getActiveUser() == null) {
 			<input type="submit">
 		</form>
 	</div>
+	<a href="Usuario.jsp">Voltar</a>
 </body>
 </html>
 <% } %>

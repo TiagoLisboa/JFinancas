@@ -47,7 +47,7 @@ if (UsuarioController.getActiveUser() == null) {
 			</label>
 			<label>
 				Tipo:<br>
-				<input type="text" name="tipo"  value="<%= limitador.getTipo () %>">
+				<input type="text" name="tipo"  value="<%= limitador.getTipo ().getNome() %>">
 				<br>
 			</label>
 				Categoria:
@@ -60,6 +60,7 @@ if (UsuarioController.getActiveUser() == null) {
 			</label>	
 			<input type="submit">
 		</form>
+		<a href="Limitadores.jsp">Voltar</a>
 </body>
 </html>
 <% } %>
