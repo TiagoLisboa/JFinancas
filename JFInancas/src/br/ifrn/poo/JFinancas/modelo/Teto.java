@@ -19,6 +19,10 @@ public class Teto extends Limitador{
 		super(nome, valor, inicio, fim, tipo);
 		// TODO Auto-generated constructor stub
 	}
+	public Teto(String nome, float valor, Date inicio, Date fim, Tipo tipo, int id) {
+		super(nome, valor, inicio, fim, tipo, id);
+		// TODO Auto-generated constructor stub
+	}
 	
 	public float calcularTransacoes (ArrayList<Movimentacao> mov) {
 		float total = 0;

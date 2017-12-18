@@ -12,13 +12,23 @@ public abstract class Movimentacao {
     private float valor;
     private String nome;
     private Tipo tipo;
+    private int id;
     
-	public Movimentacao(Date data, float valor, String nome, Tipo tipo) {
+	public Movimentacao(Date data, float valor, String nome, Tipo tipo, int id) {
 		super();
+		this.id = id;
 		this.data = data;
 		this.valor = valor;
 		this.nome = nome;
 		this.tipo = tipo;
+	}
+	
+	public Movimentacao(Date data, float valor, String nome, Tipo tipo) {
+		this(data, valor, nome, tipo, -1);
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public Date getData() {

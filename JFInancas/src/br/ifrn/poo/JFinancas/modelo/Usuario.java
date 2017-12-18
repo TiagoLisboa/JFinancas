@@ -13,21 +13,35 @@ import java.util.ArrayList;
  * @author rute
  */
 public class Usuario {
+	private int id;
     private float saldo;
     private String nome;
     private String senha;
     private Registradora registradora;
     
-    public Usuario(float saldo, String nome, String senha) {
+    public Usuario(float saldo, String nome, String senha, int id) {
 		super();
+		this.id = id;
 		this.saldo = saldo;
 		this.nome = nome;
 		this.senha = senha;
 		this.registradora = new Registradora();
 	}
     
+    public Usuario(float saldo, String nome, String senha) {
+    	this(saldo, nome, senha, -1);
+    }
+    
+    public int getId () {
+    	return id;
+    }
+    
     public boolean checkSenha (String senha) {
     	return this.senha.equals(senha);
+    }
+    
+    public String getSenha () {
+    	return senha;
     }
     
     public void setSenha (String senha) {

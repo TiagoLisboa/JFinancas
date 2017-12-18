@@ -18,5 +18,10 @@ public class Gasto extends Movimentacao{
 		super(data, valor, nome, tipo);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Gasto(Date data, float valor, String nome, Tipo tipo, int id) {
+		super(data, valor, nome, tipo, id);
+		// TODO Auto-generated constructor stub
+	}
     
 }

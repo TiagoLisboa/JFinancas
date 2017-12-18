@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ifrn.poo.JFinancas.DAO.UsuarioDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
+import br.ifrn.poo.JFinancas.modelo.Usuario;
 
 /**
  * Servlet implementation class RegistrarUsuarioServlet
@@ -40,7 +42,11 @@ public class RegistrarUsuarioServlet extends HttpServlet {
 		String nome = request.getParameter("nome");
 		String saldo = request.getParameter("saldo");
 		String passwd = request.getParameter("passwd");
-		UsuarioController.registrarUsuario(nome, Float.parseFloat(saldo), passwd);
+		Usuario usuario = new Usuario(Float.parseFloat(saldo), nome, passwd);
+		UsuarioDAO udao = new UsuarioDAO();
+		udao.adiciona(usuario);
+		udao.close();
+		//UsuarioController.registrarUsuario(nome, Float.parseFloat(saldo), passwd);
 		response.sendRedirect("login.jsp");
 	}
 

@@ -19,19 +19,18 @@
 		</label>
 		<br />
 		<br />
-		<br />
 		<label>
 			Senha:
 			<input type="password" name="passwd" <%= request.getAttribute("senhaIncorreta") != null ? "autofocus" : ""  %> />
-			<% if (request.getAttribute("senhaIncorreta") != null) { %>
-				<p style="color: red">Senha incorreta</p>
-			<% } %>
 		</label>
-		<br />
+		<% if (request.getAttribute("loginOuSenhaIncorreto") != null) { %>
+			<p style="color: red">Login ou Senha incorretos</p>
+		<% } %>
 		<br />
 		<br />
 		<input type="submit">
 	</form>
+	<br />
 	<a href="/JFInancas/registrar">novo usuario</a>
 </body>
 </html>

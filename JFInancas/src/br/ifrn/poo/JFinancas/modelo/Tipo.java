@@ -1,9 +1,20 @@
 package br.ifrn.poo.JFinancas.modelo;
 
 public class Tipo {
-	private String nome; 
-	public Tipo(String nome){
+	private String nome;
+	private int id = -1;
+	
+	public Tipo(String nome, int id){
+		this.id = id;
 		this.nome = nome;
+	}
+	
+	public Tipo(String nome){
+		this(nome, -1);
+	}
+	
+	public int getId () {
+		return id;
 	}
 	
 	public boolean equals(Object obj) {

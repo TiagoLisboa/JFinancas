@@ -13,12 +13,18 @@ import java.util.ArrayList;
  * @author rute
  */
 public class Registradora {
+	private int id = -1;
     private ArrayList<Movimentacao> movimentacoes;
     private ArrayList<Limitador> limitadores;
     
-    public Registradora() {
+    public Registradora(int id) {
+    	this.id = id;
     	this.movimentacoes 	= new ArrayList<Movimentacao>();
     	this.limitadores 	= new ArrayList<Limitador>();
+	}
+    
+    public Registradora() {
+    	this(-1);
 	}
     
     public void novaMovimentacao(Movimentacao mov){
@@ -43,5 +49,9 @@ public class Registradora {
     
     public ArrayList<Limitador> getLimitadores () {
     	return limitadores;
+    }
+    
+    public int getId() {
+    	return 1;
     }
 }

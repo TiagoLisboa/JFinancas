@@ -131,8 +131,8 @@ else
 				    %>
 				    
 				    <% if (dias.contains(days[i])) {  %> 
-				    <td  style="background-color: <%= l instanceof Teto ? "red" : "green" %>;" ><%= l.getNome() + " - " + l.getTipo().getNome() %></td>
-				    <% } else { System.out.println(dias); System.out.println(days[i]);%>
+				    <td  style="background-color: <%= l instanceof Teto ? "red" : "green" %>;" ><%= l.getNome() %> - <%= l.getTipo() %></td>
+				    <% } else { %>
 				    <td></td>
 				    <% } %> 
 				    

@@ -14,14 +14,24 @@ public abstract class Limitador {
     private Date fim;
     private String nome;
     private Tipo tipo;
+    private int id;
     
-	public Limitador(String nome, float valor, Date inicio, Date fim, Tipo tipo) {
+	public Limitador(String nome, float valor, Date inicio, Date fim, Tipo tipo, int id) {
 		super();
+		this.id = id;
 		this.valor = valor;
 		this.nome = nome;
 		this.inicio = inicio;
 		this.fim = fim;
 		this.tipo = tipo;
+	}
+	
+	public Limitador(String nome, float valor, Date inicio, Date fim, Tipo tipo) {
+		this(nome, valor, inicio, fim, tipo, -1);
+	}
+	
+	public int getId () {
+		return id;
 	}
 	
 	public float calcularTransacoes (ArrayList<Movimentacao> mov) {
