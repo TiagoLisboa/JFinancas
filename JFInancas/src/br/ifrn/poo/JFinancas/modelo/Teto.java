@@ -1,5 +1,6 @@
 package br.ifrn.poo.JFinancas.modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /*
@@ -18,5 +19,19 @@ public class Teto extends Limitador{
 		super(nome, valor, inicio, fim, tipo);
 		// TODO Auto-generated constructor stub
 	}
-    
+	
+	public float calcularTransacoes (ArrayList<Movimentacao> mov) {
+		float total = 0;
+		for (Movimentacao m : mov) {
+			if (m instanceof Gasto) {
+				if ((m.getData().after(this.getInicio()) &&  m.getData().before(this.getFim())) 
+						|| m.getData().equals(this.getInicio())  || m.getData().equals(this.getFim())) {
+					if (m.getTipo().equals(this.getTipo())) {
+						total += m.getValor();
+					}
+				}
+			}
+		}
+		return total;
+	} 
 }

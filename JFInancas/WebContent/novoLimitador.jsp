@@ -25,7 +25,7 @@ if (UsuarioController.getActiveUser() == null) {
 			</label>
 			<label>
 				Valor:<br>
-				<input type="number" name="valor">
+				<input type="number" name="valor" step="any">
 				<br>
 			</label>
 			<label>

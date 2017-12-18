@@ -131,7 +131,7 @@ else
 				    %>
 				    
 				    <% if (dias.contains(days[i])) {  %> 
-				    <td  style="background-color: <%= l instanceof Teto ? "red" : "green" %>;" ><%= l.getTipo() %></td>
+				    <td  style="background-color: <%= l instanceof Teto ? "red" : "green" %>;" ><%= l.getNome() + " - " + l.getTipo() %></td>
 				    <% } else { System.out.println(dias); System.out.println(days[i]);%>
 				    <td></td>
 				    <% } %> 
@@ -153,7 +153,7 @@ else
 				<a href="?offset=<%= offset-1 %>"> < </a>
 				</td>
 				<%
-		
+				now = Calendar.getInstance();
 				days = new String[7];
 				delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 1 + 7*offset; //add 2 if your week start on monday
 				now.add(Calendar.DAY_OF_MONTH, delta );
@@ -196,6 +196,19 @@ else
 	</div>
 	
 </div>
+<h4>Limitadores</h4>
+<table>
+	<% for (Limitador l : UsuarioController.getActiveUser().getRegistradora().getLimitadores()) {
+		float t = l.calcularTransacoes(UsuarioController.getActiveUser().getRegistradora().getMovimentacoes()); 
+	%>
+		<tr>
+			<td style="width: 100px; background-color: <%= l instanceof Teto ? "red" : "green" %>;" > <%= l.getNome() %> </td> 
+			<td><progress value="<%= t %>" max="<%= l.getValor() %>" /></td>
+			<td><% if (t > l.getValor()) %><span style="color: red">X</span></td>
+		</tr>
+		
+	<% } %>
+</tabl>
 
 </body>
 </html>

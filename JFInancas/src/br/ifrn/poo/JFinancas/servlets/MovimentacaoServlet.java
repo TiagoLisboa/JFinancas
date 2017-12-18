@@ -45,7 +45,7 @@ public class MovimentacaoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			try {
+		try {
 			String data = request.getParameter("data");
 			float valor = Float.parseFloat(request.getParameter("valor"));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -65,7 +65,7 @@ public class MovimentacaoServlet extends HttpServlet {
 		}
 		
 		response.sendRedirect("Usuario.jsp");
-		}	
-	}
+	}	
+}
 
 

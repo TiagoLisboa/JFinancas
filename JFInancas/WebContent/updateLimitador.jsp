@@ -39,7 +39,7 @@ if (UsuarioController.getActiveUser() == null) {
 			</label>
 			<label>
 				Valor:<br>
-				<input type="number" name="valor"  value="<%= limitador.getValor () %>">
+				<input type="number" name="valor"  value="<%= limitador.getValor () %>" step="any">
 				<br>
 			</label>
 			<label>

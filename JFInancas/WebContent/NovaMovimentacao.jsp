@@ -15,7 +15,7 @@ if (UsuarioController.getActiveUser() == null) {
 <body>
 	<div style="width: 50%; float: left;">
 		<h3>Movimentações</h3>
-		<form action="registrarMovimentacao">
+		<form action="movimentacao" method="POST">
 			<label>
 				Data:<br>
 				<input type="date" name="data">
@@ -23,7 +23,7 @@ if (UsuarioController.getActiveUser() == null) {
 			</label>
 			<label>
 				Valor:<br>
-				<input type="number" name="valor">
+				<input type="number" name="valor" step="any">
 				<br>
 			</label>
 			<label>

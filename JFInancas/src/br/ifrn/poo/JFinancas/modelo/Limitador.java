@@ -1,6 +1,7 @@
 package br.ifrn.poo.JFinancas.modelo;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -21,6 +22,10 @@ public abstract class Limitador {
 		this.inicio = inicio;
 		this.fim = fim;
 		this.tipo = tipo;
+	}
+	
+	public float calcularTransacoes (ArrayList<Movimentacao> mov) {
+		return 0;
 	}
 
 	public float getValor() {
