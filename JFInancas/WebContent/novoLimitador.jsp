@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="br.ifrn.poo.JFinancas.controle.UsuarioController"%>
+    import="br.ifrn.poo.JFinancas.controle.UsuarioController,
+    br.ifrn.poo.JFinancas.modelo.Tipo"%>
 <%
 if (UsuarioController.getActiveUser() == null) { 
 	response.sendRedirect("login");
@@ -35,7 +36,11 @@ if (UsuarioController.getActiveUser() == null) {
 			</label>
 			<label>
 				Tipo:<br>
-				<input type="text" name="tipo">
+					<select name="tipo">
+					<% int i = 0; for (Tipo t : UsuarioController.getTipos()) { %>
+						<option value="<%= i %>"><%= t.getNome() %></option>
+					<% i++;} %>
+				</select>
 				<br>
 			</label>
 				Categoria:

@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class Meta extends Limitador {
 
-	public Meta(String nome, float valor, Date inicio, Date fim, String tipo) {
+	public Meta(String nome, float valor, Date inicio, Date fim, Tipo tipo) {
 		super(nome, valor, inicio, fim, tipo);
 		// TODO Auto-generated constructor stub
 	}

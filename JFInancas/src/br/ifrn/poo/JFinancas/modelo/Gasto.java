@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class Gasto extends Movimentacao{
 
-	public Gasto(Date data, float valor, String nome, String tipo) {
+	public Gasto(Date data, float valor, String nome, Tipo tipo) {
 		super(data, valor, nome, tipo);
 		// TODO Auto-generated constructor stub
 	}

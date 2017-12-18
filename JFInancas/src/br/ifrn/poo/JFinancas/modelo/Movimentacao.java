@@ -11,9 +11,9 @@ public abstract class Movimentacao {
     private Date data;
     private float valor;
     private String nome;
-    private String tipo;
+    private Tipo tipo;
     
-	public Movimentacao(Date data, float valor, String nome, String tipo) {
+	public Movimentacao(Date data, float valor, String nome, Tipo tipo) {
 		super();
 		this.data = data;
 		this.valor = valor;
@@ -45,11 +45,11 @@ public abstract class Movimentacao {
 		this.nome = nome;
 	}
 
-	public String getTipo() {
+	public Tipo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
     

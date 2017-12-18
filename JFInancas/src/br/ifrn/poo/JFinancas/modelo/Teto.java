@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class Teto extends Limitador{
 
-	public Teto(String nome, float valor, Date inicio, Date fim, String tipo) {
+	public Teto(String nome, float valor, Date inicio, Date fim, Tipo tipo) {
 		super(nome, valor, inicio, fim, tipo);
 		// TODO Auto-generated constructor stub
 	}

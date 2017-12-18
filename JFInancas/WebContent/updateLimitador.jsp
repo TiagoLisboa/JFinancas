@@ -17,16 +17,14 @@ if (UsuarioController.getActiveUser() == null) {
 </head>
 <body>
 <%
-	int idx = Integer.parseInt(request.getParameter("idx"));
-	Limitador limitador = UsuarioController.getActiveUser().getRegistradora().getLimitadores().get(idx);
-	
+	Limitador limitador = (Limitador)request.getAttribute("limitador");
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	String ini = sdf.format(limitador.getInicio());
 	String fim = sdf.format(limitador.getFim());
 %>
 <form action="updateLimitador" method="post">
-			<input type="hidden" name="idx" value="<%= idx %>">
+			<input type="hidden" name="idx" value="${idx}">
 			<label>
 				Data inicial:<br>
 				<input type="date" name="data1" value="<%= ini %>">

@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
+import br.ifrn.poo.JFinancas.exceptions.TipoNaoEncontradoException;
 import br.ifrn.poo.JFinancas.modelo.Meta;
 import br.ifrn.poo.JFinancas.modelo.Teto;
+import br.ifrn.poo.JFinancas.modelo.Tipo;
 
 /**
  * Servlet implementation class LimitadorServlet
@@ -54,7 +56,7 @@ public class LimitadorServlet extends HttpServlet {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dataInicial = sdf.parse(data1);
 			Date dataFinal = sdf.parse(data2);
-			String tipo = request.getParameter("tipo");
+			Tipo tipo = UsuarioController.getTipos().get(Integer.parseInt(request.getParameter("tipo")));
 			String categoria = request.getParameter("categoria");
 			if(categoria.equals("Teto")){
 				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Teto(nome, valor, dataInicial, dataFinal, tipo));
@@ -65,7 +67,7 @@ public class LimitadorServlet extends HttpServlet {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		
 		response.sendRedirect("Limitadores.jsp");
 	

@@ -1,6 +1,7 @@
 package br.ifrn.poo.JFinancas.servlets;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,8 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
+import br.ifrn.poo.JFinancas.exceptions.TipoNaoEncontradoException;
 import br.ifrn.poo.JFinancas.modelo.Ganho;
 import br.ifrn.poo.JFinancas.modelo.Gasto;
+import br.ifrn.poo.JFinancas.modelo.Tipo;
 
 /**
  * Servlet implementation class MovimentacaoServlet
@@ -51,7 +54,7 @@ public class MovimentacaoServlet extends HttpServlet {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dataMovimentacao = sdf.parse(data);
 			String nome = request.getParameter("nome");
-			String tipo = request.getParameter("tipo");
+			Tipo tipo = UsuarioController.getTipos().get(Integer.parseInt(request.getParameter("tipo")));
 			String categoria = request.getParameter("categoria");
 			if(categoria.equals("Gasto")){
 				UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Gasto(dataMovimentacao, valor, nome, tipo));
@@ -62,7 +65,7 @@ public class MovimentacaoServlet extends HttpServlet {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		
 		response.sendRedirect("Usuario.jsp");
 	}	

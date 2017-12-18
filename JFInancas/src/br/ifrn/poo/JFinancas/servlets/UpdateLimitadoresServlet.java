@@ -15,6 +15,7 @@ import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.modelo.Limitador;
 import br.ifrn.poo.JFinancas.modelo.Meta;
 import br.ifrn.poo.JFinancas.modelo.Teto;
+import br.ifrn.poo.JFinancas.modelo.Tipo;
 
 /**
  * Servlet implementation class UpdateLimitadoresServlet
@@ -36,9 +37,11 @@ public class UpdateLimitadoresServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (UsuarioController.getActiveUser() != null) {
-			String idx = request.getParameter("idx");
-			System.out.println(request.getParameter("idx"));
-			response.sendRedirect("updateLimitador.jsp?idx="+idx);
+			int idx = Integer.parseInt(request.getParameter("idx"));
+			Limitador limitador = UsuarioController.getActiveUser().getRegistradora().getLimitadores().get(idx);
+			request.setAttribute("limitador", limitador);
+			request.setAttribute("idx", idx);
+			request.getRequestDispatcher("updateLimitador.jsp").forward(request, response);
 		} else {
 			response.sendRedirect("login");
 		}
@@ -57,7 +60,7 @@ public class UpdateLimitadoresServlet extends HttpServlet {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dataInicial = sdf.parse(data1);
 			Date dataFinal = sdf.parse(data2);
-			String tipo = request.getParameter("tipo");
+			Tipo tipo = new Tipo(request.getParameter("tipo"));
 			String categoria = request.getParameter("categoria");
 			
 			if(categoria.equals("Teto")){

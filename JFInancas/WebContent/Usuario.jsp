@@ -131,7 +131,7 @@ else
 				    %>
 				    
 				    <% if (dias.contains(days[i])) {  %> 
-				    <td  style="background-color: <%= l instanceof Teto ? "red" : "green" %>;" ><%= l.getNome() + " - " + l.getTipo() %></td>
+				    <td  style="background-color: <%= l instanceof Teto ? "red" : "green" %>;" ><%= l.getNome() + " - " + l.getTipo().getNome() %></td>
 				    <% } else { System.out.println(dias); System.out.println(days[i]);%>
 				    <td></td>
 				    <% } %> 
@@ -202,7 +202,7 @@ else
 		float t = l.calcularTransacoes(UsuarioController.getActiveUser().getRegistradora().getMovimentacoes()); 
 	%>
 		<tr>
-			<td style="width: 100px; background-color: <%= l instanceof Teto ? "red" : "green" %>;" > <%= l.getNome() %> </td> 
+			<td style="width: 300px; background-color: <%= l instanceof Teto ? "red" : "green" %>;" > <%= l.getNome() + " - " + l.getTipo().getNome() %> </td> 
 			<td><progress value="<%= t %>" max="<%= l.getValor() %>" /></td>
 			<td><% if (t > l.getValor()) %><span style="color: red">X</span></td>
 		</tr>
