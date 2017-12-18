@@ -34,8 +34,11 @@ public class LimitadorServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.sendRedirect("novoLimitador.jsp");
+		// TODO Auto-generated method stub<%
+		if (UsuarioController.getActiveUser() == null) 
+			response.sendRedirect("login");
+		else
+			response.sendRedirect("novoLimitador.jsp");
 	}
 
 	/**

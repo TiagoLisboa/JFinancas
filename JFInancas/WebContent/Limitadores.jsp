@@ -15,6 +15,10 @@
 <body>
 	
 		<%
+		if (UsuarioController.getActiveUser() == null) { 
+			response.sendRedirect("login");
+		} else {
+		
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		int pagina;
 		if (request.getParameter("pagina") != null)
@@ -91,3 +95,4 @@
 			<a href="?pagina=<%= pagina+1 %>"> > </a>
 </body>
 </html>
+<% } %>

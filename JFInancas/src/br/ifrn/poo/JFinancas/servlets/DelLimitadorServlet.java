@@ -30,9 +30,13 @@ public class DelLimitadorServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int idx = Integer.parseInt(request.getParameter("idx"));
-		UsuarioController.getActiveUser().getRegistradora().getLimitadores().remove(idx);
-		response.sendRedirect("Limitadores.jsp");
+		if (UsuarioController.getActiveUser() != null) {
+			int idx = Integer.parseInt(request.getParameter("idx"));
+			UsuarioController.getActiveUser().getRegistradora().getLimitadores().remove(idx);
+			response.sendRedirect("Limitadores.jsp");
+		} else {
+			response.sendRedirect("login");
+		}
 	}
 
 

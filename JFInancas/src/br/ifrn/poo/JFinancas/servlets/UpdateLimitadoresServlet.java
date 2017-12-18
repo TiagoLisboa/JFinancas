@@ -35,9 +35,13 @@ public class UpdateLimitadoresServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String idx = request.getParameter("idx");
-		System.out.println(request.getParameter("idx"));
-		response.sendRedirect("updateLimitador.jsp?idx="+idx);
+		if (UsuarioController.getActiveUser() != null) {
+			String idx = request.getParameter("idx");
+			System.out.println(request.getParameter("idx"));
+			response.sendRedirect("updateLimitador.jsp?idx="+idx);
+		} else {
+			response.sendRedirect("login");
+		}
 	}
 
 	/**
