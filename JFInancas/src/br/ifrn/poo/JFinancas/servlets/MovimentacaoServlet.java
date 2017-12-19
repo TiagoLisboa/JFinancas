@@ -1,7 +1,6 @@
 package br.ifrn.poo.JFinancas.servlets;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,10 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ifrn.poo.JFinancas.DAO.MovimentacaoDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
-import br.ifrn.poo.JFinancas.exceptions.TipoNaoEncontradoException;
 import br.ifrn.poo.JFinancas.modelo.Ganho;
 import br.ifrn.poo.JFinancas.modelo.Gasto;
+import br.ifrn.poo.JFinancas.modelo.Registradora;
 import br.ifrn.poo.JFinancas.modelo.Tipo;
 
 /**
@@ -56,11 +56,21 @@ public class MovimentacaoServlet extends HttpServlet {
 			String nome = request.getParameter("nome");
 			Tipo tipo = UsuarioController.getTipos().get(Integer.parseInt(request.getParameter("tipo")));
 			String categoria = request.getParameter("categoria");
+			MovimentacaoDAO mdao = new MovimentacaoDAO();
+			
+			Registradora r = UsuarioController.getActiveUser().getRegistradora();
+			
 			if(categoria.equals("Gasto")){
-				UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Gasto(dataMovimentacao, valor, nome, tipo));
+				//UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Gasto(dataMovimentacao, valor, nome, tipo));
+				mdao.adiciona(r, new Gasto(dataMovimentacao, valor, nome, tipo));
 			} else {
-				UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Ganho(dataMovimentacao, valor, nome, tipo));
+				mdao.adiciona(r, new Ganho(dataMovimentacao, valor, nome, tipo));
 			}
+			
+			
+			r.setMovimentacoes(mdao.getByIdRegistradora(r));
+			
+			mdao.close();
 		} catch(ParseException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

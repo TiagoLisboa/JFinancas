@@ -11,24 +11,24 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import br.ifrn.poo.JFinancas.ConnectionFactory;
-import br.ifrn.poo.JFinancas.modelo.Ganho;
-import br.ifrn.poo.JFinancas.modelo.Gasto;
-import br.ifrn.poo.JFinancas.modelo.Movimentacao;
+import br.ifrn.poo.JFinancas.modelo.Meta;
+import br.ifrn.poo.JFinancas.modelo.Limitador;
 import br.ifrn.poo.JFinancas.modelo.Registradora;
+import br.ifrn.poo.JFinancas.modelo.Teto;
 import br.ifrn.poo.JFinancas.modelo.Tipo;
 
-public class MovimentacaoDAO {
+public class LimitadorDAO {
 	private Connection connection;
 	
-	public MovimentacaoDAO() {
+	public LimitadorDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
-	public ArrayList<Movimentacao> getByIdRegistradora (Registradora registradora) throws ParseException {
-		String sql = "select * from movimentacoes where id_registradora=?";
+	public ArrayList<Limitador> getByIdRegistradora (Registradora registradora) throws ParseException {
+		String sql = "select * from limitadores where id_registradora=(?)";
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		
-		ArrayList<Movimentacao> movimentacoes = new ArrayList<Movimentacao>();
+		ArrayList<Limitador> limitadores= new ArrayList<Limitador>();
 		
 		try {
             // prepared statement para inserção
@@ -42,31 +42,31 @@ public class MovimentacaoDAO {
             
             while (rs.next()) {
             	String nome = rs.getString("nome");
-            	System.out.println(nome);
             	int id = rs.getInt("id");
             	float valor = rs.getFloat("valor");
-            	Date data = df.parse(rs.getString("data"));
+            	Date inicio = df.parse(rs.getString("inicio"));
+            	Date fim = df.parse(rs.getString("fim"));
             	String categoria = rs.getString("categoria");
             	
             	TipoDAO tdao = new TipoDAO();
             	Tipo tipo = tdao.getById(new Tipo("", rs.getInt("id_tipo")));
             	
-            	if (categoria.equals("Gasto")) movimentacoes.add(new Gasto(data, valor, nome, tipo, id));
-            	else movimentacoes.add(new Ganho(data, valor, nome, tipo, id));
+            	if (categoria.equals("Teto")) limitadores.add(new Teto(nome, valor, inicio, fim, tipo, id));
+            	else limitadores.add(new Meta(nome, valor, inicio, fim, tipo, id));
             }
             
             rs.close();
             stmt.close();
             
-            return movimentacoes;
+            return limitadores;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 	}
 	
-	public void adiciona(Registradora r, Movimentacao movimentacao) {
-		String sql1 = "insert into movimentacoes (id_registradora, id_tipo, nome, valor, data, categoria)"
-				+ "values (?, ?, ?, ?, ?, ?)";
+	public void adiciona(Registradora r, Limitador limitador) {
+		String sql1 = "insert into limitadores (id_registradora, id_tipo, nome, valor, inicio, fim, categoria)"
+				+ "values (?, ?, ?, ?, ?, ?, ?)";
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		
         try {
@@ -74,24 +74,26 @@ public class MovimentacaoDAO {
         	PreparedStatement stmt = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
         	
         	int id_registradora = r.getId();
-        	int id_tipo= movimentacao.getTipo().getId();
-        	String nome = movimentacao.getNome();
-        	float valor = movimentacao.getValor();
-        	Date data = movimentacao.getData();
-        	String categoria = movimentacao instanceof Gasto ? "Gasto" : "Ganho";
+        	int id_tipo= limitador.getTipo().getId();
+        	String nome = limitador.getNome();
+        	float valor = limitador.getValor();
+        	Date inicio = limitador.getInicio();
+        	Date fim = limitador.getFim();
+        	String categoria = limitador instanceof Teto ? "Teto" : "Meta";
         	
         	stmt.setInt(1, id_registradora);
         	stmt.setInt(2, id_tipo);
         	stmt.setString(3, nome);
         	stmt.setFloat(4, valor);
-        	stmt.setString(5, df.format(data));
-        	stmt.setString(6, categoria);
+        	stmt.setString(5, df.format(inicio));
+        	stmt.setString(6, df.format(fim));
+        	stmt.setString(7, categoria);
         	
         	// insere
         	int affectedRows = stmt.executeUpdate();
         	
         	if (affectedRows == 0)
-        		throw new SQLException("Não foi possivel cadastrar movimentação");
+        		throw new SQLException("Não foi possivel cadastrar limitador");
         	
                 	
             stmt.close();

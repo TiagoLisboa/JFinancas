@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ifrn.poo.JFinancas.DAO.LimitadorDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
-import br.ifrn.poo.JFinancas.exceptions.TipoNaoEncontradoException;
 import br.ifrn.poo.JFinancas.modelo.Meta;
+import br.ifrn.poo.JFinancas.modelo.Registradora;
 import br.ifrn.poo.JFinancas.modelo.Teto;
 import br.ifrn.poo.JFinancas.modelo.Tipo;
 
@@ -63,6 +64,23 @@ public class LimitadorServlet extends HttpServlet {
 			} else {
 				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Meta(nome, valor, dataInicial, dataFinal, tipo));
 			}
+			
+			LimitadorDAO ldao = new LimitadorDAO();
+			
+			Registradora r = UsuarioController.getActiveUser().getRegistradora();
+			
+			if(categoria.equals("Teto")){
+				//UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Gasto(dataMovimentacao, valor, nome, tipo));
+				ldao.adiciona(r, new Teto(nome, valor, dataInicial, dataFinal, tipo));
+			} else {
+				ldao.adiciona(r, new Meta(nome, valor, dataInicial, dataFinal, tipo));
+			}
+			
+			
+			r.setLimitadores(ldao.getByIdRegistradora(r));
+			
+			ldao.close();
+			
 		} catch(ParseException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

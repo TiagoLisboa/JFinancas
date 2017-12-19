@@ -1,7 +1,5 @@
 package br.ifrn.poo.JFinancas.modelo;
 
-import java.util.ArrayList;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,13 +17,18 @@ public class Usuario {
     private String senha;
     private Registradora registradora;
     
-    public Usuario(float saldo, String nome, String senha, int id) {
+    public Usuario(Registradora registradora, float saldo, String nome, String senha, int id) {
 		super();
 		this.id = id;
 		this.saldo = saldo;
 		this.nome = nome;
 		this.senha = senha;
-		this.registradora = new Registradora();
+		this.registradora = registradora;
+	}
+    
+    
+    public Usuario(float saldo, String nome, String senha, int id) {
+    	this(new Registradora(), saldo, nome, senha, -1);
 	}
     
     public Usuario(float saldo, String nome, String senha) {

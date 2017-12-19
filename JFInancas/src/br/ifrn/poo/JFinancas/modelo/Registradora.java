@@ -39,6 +39,10 @@ public class Registradora {
     	return movimentacoes;
     }
     
+    public void setMovimentacoes (ArrayList<Movimentacao> movimentacoes) {
+    	this.movimentacoes = movimentacoes;
+    }
+    
     public void novoLimitador(Limitador lim){
         limitadores.add(lim);
     }
@@ -51,7 +55,11 @@ public class Registradora {
     	return limitadores;
     }
     
+    public void setLimitadores (ArrayList<Limitador> limitadores) {
+    	this.limitadores = limitadores;
+    }
+    
     public int getId() {
-    	return 1;
+    	return id;
     }
 }

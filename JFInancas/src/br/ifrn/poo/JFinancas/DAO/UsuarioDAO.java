@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 
 import br.ifrn.poo.JFinancas.ConnectionFactory;
 import br.ifrn.poo.JFinancas.exceptions.LoginOuSenhaIncorretoException;
+import br.ifrn.poo.JFinancas.modelo.Registradora;
 import br.ifrn.poo.JFinancas.modelo.Usuario;
 
 public class UsuarioDAO {
@@ -44,8 +46,6 @@ public class UsuarioDAO {
                 }
             }
         	
-        	System.out.println(id);
-        	
             stmt.close();
         	
             stmt = connection.prepareStatement(sql);
@@ -65,7 +65,7 @@ public class UsuarioDAO {
         }
     }
 	
-	public Usuario login(Usuario usuario) throws LoginOuSenhaIncorretoException {
+	public Usuario login(Usuario usuario) throws LoginOuSenhaIncorretoException, ParseException {
         String sql = "select * from usuarios where nome=(?) and senha=(?)";
 
         try {
@@ -81,13 +81,14 @@ public class UsuarioDAO {
             
             Usuario usr = null;
             
-            while (rs.next()) {
+            if (rs.next()) {
             	String nome = rs.getString("nome");
             	String senha = rs.getString("senha");
             	float saldo = rs.getFloat("saldo");
             	int id = rs.getInt("id");
-            	int id_registradora = rs.getInt("id_registradora");
-            	usr = new Usuario(saldo, nome, senha);
+            	RegistradoraDAO rdao = new RegistradoraDAO();
+            	Registradora registradora = rdao.getById(new Registradora(rs.getInt("id_registradora")));
+            	usr = new Usuario(registradora, saldo, nome, senha, id);
             }
             
             rs.close();

@@ -7,19 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ifrn.poo.JFinancas.controle.UsuarioController;
-
 /**
- * Servlet implementation class DelLimitadorServlet
+ * Servlet implementation class HomeServlet
  */
-@WebServlet("/delLimitador")
-public class DelLimitadorServlet extends HttpServlet {
+@WebServlet("/home")
+public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DelLimitadorServlet() {
+    public HomeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,15 +26,16 @@ public class DelLimitadorServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		if (UsuarioController.getActiveUser() != null) {
-			int idx = Integer.parseInt(request.getParameter("idx"));
-			UsuarioController.getActiveUser().getRegistradora().getLimitadores().remove(idx);
-			response.sendRedirect("Limitadores.jsp");
-		} else {
-			response.sendRedirect("login");
-		}
+		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
 
 }
