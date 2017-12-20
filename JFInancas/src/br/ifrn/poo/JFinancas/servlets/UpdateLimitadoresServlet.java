@@ -31,7 +31,6 @@ public class UpdateLimitadoresServlet extends HttpServlet {
      */
     public UpdateLimitadoresServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -53,29 +52,40 @@ public class UpdateLimitadoresServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		UsuarioDAO udao = new UsuarioDAO();
+		LimitadorDAO ldao = new LimitadorDAO();
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		String data1 = request.getParameter("data1");
+		String data2 = request.getParameter("data2");
+		String nome = request.getParameter("nome");
+		float valor = Float.parseFloat(request.getParameter("valor"));
+		
+		Tipo tipo = new Tipo(request.getParameter("tipo"));
+		String categoria = request.getParameter("categoria");
+		
 		try {
-			int id = Integer.parseInt(request.getParameter("id"));
-			String data1 = request.getParameter("data1");
-			String data2 = request.getParameter("data2");
-			String nome = request.getParameter("nome");
-			float valor = Float.parseFloat(request.getParameter("valor"));
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dataInicial = sdf.parse(data1);
 			Date dataFinal = sdf.parse(data2);
-			Tipo tipo = new Tipo(request.getParameter("tipo"));
-			String categoria = request.getParameter("categoria");
-			LimitadorDAO ldao = new LimitadorDAO();
+			
+			
 			if(categoria.equals("Teto")){
 				ldao.editar(UsuarioController.getActiveUser().getRegistradora(), new Teto(nome, valor, dataInicial, dataFinal, tipo, id));
 			} else {
 				ldao.editar(UsuarioController.getActiveUser().getRegistradora(), new Meta(nome, valor, dataInicial, dataFinal, tipo, id));
 			}
-			UsuarioDAO udao = new UsuarioDAO();
+			
 			UsuarioController.setActiveUser(udao.login(UsuarioController.getActiveUser()));
+			
 		} catch(ParseException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			ldao.close();
+			udao.close();
 		}
 		
 		response.sendRedirect("Limitadores.jsp");

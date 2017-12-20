@@ -90,6 +90,7 @@ public class UsuarioDAO {
             	int id = rs.getInt("id");
             	RegistradoraDAO rdao = new RegistradoraDAO();
             	Registradora registradora = rdao.getById(new Registradora(rs.getInt("id_registradora")));
+            	rdao.close();
             	usr = new Usuario(registradora, saldo, nome, senha, id);
             }
             

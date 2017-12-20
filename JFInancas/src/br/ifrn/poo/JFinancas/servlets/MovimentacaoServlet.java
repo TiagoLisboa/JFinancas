@@ -30,14 +30,12 @@ public class MovimentacaoServlet extends HttpServlet {
      */
     public MovimentacaoServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		if (UsuarioController.getActiveUser() != null)
 			response.sendRedirect("NovaMovimentacao.jsp");
 		else
@@ -48,17 +46,18 @@ public class MovimentacaoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		MovimentacaoDAO mdao = new MovimentacaoDAO();
+		
+		String data = request.getParameter("data");
+		float valor = Float.parseFloat(request.getParameter("valor"));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String nome = request.getParameter("nome");
+		Tipo tipo = UsuarioController.getTipos().get(Integer.parseInt(request.getParameter("tipo")));
+		String categoria = request.getParameter("categoria");
+		Registradora r = UsuarioController.getActiveUser().getRegistradora();
+		
 		try {
-			String data = request.getParameter("data");
-			float valor = Float.parseFloat(request.getParameter("valor"));
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dataMovimentacao = sdf.parse(data);
-			String nome = request.getParameter("nome");
-			Tipo tipo = UsuarioController.getTipos().get(Integer.parseInt(request.getParameter("tipo")));
-			String categoria = request.getParameter("categoria");
-			MovimentacaoDAO mdao = new MovimentacaoDAO();
-			
-			Registradora r = UsuarioController.getActiveUser().getRegistradora();
 			
 			if(categoria.equals("Gasto")){
 				//UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Gasto(dataMovimentacao, valor, nome, tipo));
@@ -69,13 +68,13 @@ public class MovimentacaoServlet extends HttpServlet {
 			
 			
 			r.setMovimentacoes(mdao.getByIdRegistradora(r));
-			
-			mdao.close();
 		} catch(ParseException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		} finally {
+			mdao.close();
+		}
 		
 		response.sendRedirect("Usuario.jsp");
 	}	

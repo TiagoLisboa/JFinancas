@@ -24,15 +24,12 @@ public class RegistrarUsuarioServlet extends HttpServlet {
      */
     public RegistrarUsuarioServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
 		boolean isActiveUser = UsuarioController.getActiveUser() != null;
 		
 		
@@ -48,21 +45,23 @@ public class RegistrarUsuarioServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String nome = request.getParameter("nome");
 		String saldo = request.getParameter("saldo");
 		String passwd = request.getParameter("passwd");
+		
 		Usuario usuario = new Usuario(Float.parseFloat(saldo), nome, passwd);
 		UsuarioDAO udao = new UsuarioDAO();
+		
 		try {
 			udao.adiciona(usuario);
 		} catch(UsuarioJaCadastradoExcpetion e) {
 			request.setAttribute("jaCadastrado", true);
 			request.getRequestDispatcher("registrar.jsp").forward(request, response);
 			return;
+		} finally {
+			udao.close();
 		}
 		
-		udao.close();
 		//UsuarioController.registrarUsuario(nome, Float.parseFloat(saldo), passwd);
 		response.sendRedirect("login.jsp");
 	}

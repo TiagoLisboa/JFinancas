@@ -13,7 +13,6 @@ import br.ifrn.poo.JFinancas.DAO.LimitadorDAO;
 import br.ifrn.poo.JFinancas.DAO.UsuarioDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.exceptions.LoginOuSenhaIncorretoException;
-import br.ifrn.poo.JFinancas.modelo.Limitador;
 import br.ifrn.poo.JFinancas.modelo.Teto;
 
 /**
@@ -28,14 +27,12 @@ public class DelLimitadorServlet extends HttpServlet {
      */
     public DelLimitadorServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		if (UsuarioController.getActiveUser() != null) {
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			
@@ -46,8 +43,10 @@ public class DelLimitadorServlet extends HttpServlet {
 			try {
 				UsuarioController.setActiveUser(udao.login(UsuarioController.getActiveUser()));
 			} catch (LoginOuSenhaIncorretoException | ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+				udao.close();
+				ldao.close();
 			}
 			response.sendRedirect("Limitadores.jsp");
 		} else {

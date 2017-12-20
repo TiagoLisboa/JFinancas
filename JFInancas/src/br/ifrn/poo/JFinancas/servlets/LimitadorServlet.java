@@ -30,14 +30,12 @@ public class LimitadorServlet extends HttpServlet {
      */
     public LimitadorServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub<%
 		if (UsuarioController.getActiveUser() == null) 
 			response.sendRedirect("login");
 		else
@@ -48,29 +46,30 @@ public class LimitadorServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String data1 = request.getParameter("data1");
+		String data2 = request.getParameter("data2");
+		String nome = request.getParameter("nome");
+		float valor = Float.parseFloat(request.getParameter("valor"));
+		Tipo tipo = UsuarioController.getTipos().get(Integer.parseInt(request.getParameter("tipo")));
+		String categoria = request.getParameter("categoria");
+		
+		LimitadorDAO ldao = new LimitadorDAO();
+		
+		Registradora r = UsuarioController.getActiveUser().getRegistradora();
+		
 		try {
-			String data1 = request.getParameter("data1");
-			String data2 = request.getParameter("data2");
-			String nome = request.getParameter("nome");
-			float valor = Float.parseFloat(request.getParameter("valor"));
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dataInicial = sdf.parse(data1);
 			Date dataFinal = sdf.parse(data2);
-			Tipo tipo = UsuarioController.getTipos().get(Integer.parseInt(request.getParameter("tipo")));
-			String categoria = request.getParameter("categoria");
+			
 			if(categoria.equals("Teto")){
 				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Teto(nome, valor, dataInicial, dataFinal, tipo));
 			} else {
 				UsuarioController.getActiveUser().getRegistradora().novoLimitador(new Meta(nome, valor, dataInicial, dataFinal, tipo));
 			}
 			
-			LimitadorDAO ldao = new LimitadorDAO();
-			
-			Registradora r = UsuarioController.getActiveUser().getRegistradora();
-			
 			if(categoria.equals("Teto")){
-				//UsuarioController.getActiveUser().getRegistradora().novaMovimentacao(new Gasto(dataMovimentacao, valor, nome, tipo));
 				ldao.adiciona(r, new Teto(nome, valor, dataInicial, dataFinal, tipo));
 			} else {
 				ldao.adiciona(r, new Meta(nome, valor, dataInicial, dataFinal, tipo));
@@ -79,13 +78,13 @@ public class LimitadorServlet extends HttpServlet {
 			
 			r.setLimitadores(ldao.getByIdRegistradora(r));
 			
-			ldao.close();
-			
 		} catch(ParseException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		} finally {
+			ldao.close();
+		}
 		
 		response.sendRedirect("Limitadores.jsp");
 	

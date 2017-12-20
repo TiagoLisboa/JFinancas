@@ -50,6 +50,7 @@ public class LimitadorDAO {
             	
             	TipoDAO tdao = new TipoDAO();
             	Tipo tipo = tdao.getById(new Tipo("", rs.getInt("id_tipo")));
+            	tdao.close();
             	
             	if (categoria.equals("Teto")) limitadores.add(new Teto(nome, valor, inicio, fim, tipo, id));
             	else limitadores.add(new Meta(nome, valor, inicio, fim, tipo, id));

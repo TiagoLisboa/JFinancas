@@ -28,7 +28,6 @@ public class LoginServlet extends HttpServlet {
      */
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -54,21 +53,25 @@ public class LoginServlet extends HttpServlet {
 		String passwd = request.getParameter("passwd");
 		request.setAttribute("isnotactive", true);
 		TipoDAO tdao = new TipoDAO();
+		
 		ArrayList<Tipo> tipos = tdao.getAll();
 		UsuarioController.setTipos(tipos);
+		
+		Usuario usuario = new Usuario (0, nome, passwd);
+		UsuarioDAO udao = new UsuarioDAO();
+		
 		try {
-			Usuario usuario = new Usuario (0, nome, passwd);
-			UsuarioDAO udao = new UsuarioDAO();
 			usuario = udao.login(usuario);
-			udao.close();
 			UsuarioController.setActiveUser(usuario);
 		} catch (LoginOuSenhaIncorretoException e) {
 			request.setAttribute("loginOuSenhaIncorreto", true);
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			return;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			udao.close();
+			tdao.close();
 		}
 		response.sendRedirect("Usuario.jsp");
 	}

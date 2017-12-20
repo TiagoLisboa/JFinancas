@@ -50,6 +50,7 @@ public class MovimentacaoDAO {
             	
             	TipoDAO tdao = new TipoDAO();
             	Tipo tipo = tdao.getById(new Tipo("", rs.getInt("id_tipo")));
+            	tdao.close();
             	
             	if (categoria.equals("Gasto")) movimentacoes.add(new Gasto(data, valor, nome, tipo, id));
             	else movimentacoes.add(new Ganho(data, valor, nome, tipo, id));
