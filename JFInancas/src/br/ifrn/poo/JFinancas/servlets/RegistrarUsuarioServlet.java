@@ -32,7 +32,16 @@ public class RegistrarUsuarioServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.sendRedirect("registrar.jsp");
+		
+		boolean isActiveUser = UsuarioController.getActiveUser() != null;
+		
+		
+		request.setAttribute("isnotactive", !isActiveUser);
+
+		if (isActiveUser)
+			response.sendRedirect("home");
+		else
+			request.getRequestDispatcher("registrar.jsp").forward(request, response);
 	}
 
 	/**

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ifrn.poo.JFinancas.DAO.LimitadorDAO;
+import br.ifrn.poo.JFinancas.DAO.UsuarioDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.modelo.Limitador;
 import br.ifrn.poo.JFinancas.modelo.Meta;
@@ -51,8 +53,8 @@ public class UpdateLimitadoresServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int idx = Integer.parseInt(request.getParameter("idx"));
 		try {
+			int id = Integer.parseInt(request.getParameter("id"));
 			String data1 = request.getParameter("data1");
 			String data2 = request.getParameter("data2");
 			String nome = request.getParameter("nome");
@@ -62,12 +64,14 @@ public class UpdateLimitadoresServlet extends HttpServlet {
 			Date dataFinal = sdf.parse(data2);
 			Tipo tipo = new Tipo(request.getParameter("tipo"));
 			String categoria = request.getParameter("categoria");
-			
+			LimitadorDAO ldao = new LimitadorDAO();
 			if(categoria.equals("Teto")){
-				UsuarioController.getActiveUser().getRegistradora().getLimitadores().set(idx, new Teto(nome, valor, dataInicial, dataFinal, tipo));
+				ldao.editar(UsuarioController.getActiveUser().getRegistradora(), new Teto(nome, valor, dataInicial, dataFinal, tipo, id));
 			} else {
-				UsuarioController.getActiveUser().getRegistradora().getLimitadores().set(idx, new Meta(nome, valor, dataInicial, dataFinal, tipo));
+				ldao.editar(UsuarioController.getActiveUser().getRegistradora(), new Meta(nome, valor, dataInicial, dataFinal, tipo, id));
 			}
+			UsuarioDAO udao = new UsuarioDAO();
+			UsuarioController.setActiveUser(udao.login(UsuarioController.getActiveUser()));
 		} catch(ParseException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

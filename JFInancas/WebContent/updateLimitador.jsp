@@ -24,7 +24,7 @@ if (UsuarioController.getActiveUser() == null) {
 	String fim = sdf.format(limitador.getFim());
 %>
 <form action="updateLimitador" method="post">
-			<input type="hidden" name="idx" value="${idx}">
+			<input type="hidden" name="id" value="<%= limitador.getId() %>">
 			<label>
 				Data inicial:<br>
 				<input type="date" name="data1" value="<%= ini %>">
