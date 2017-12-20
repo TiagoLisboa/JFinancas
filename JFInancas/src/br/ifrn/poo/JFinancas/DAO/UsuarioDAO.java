@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.text.ParseException;
 
 import br.ifrn.poo.JFinancas.ConnectionFactory;
 import br.ifrn.poo.JFinancas.exceptions.LoginOuSenhaIncorretoException;
+import br.ifrn.poo.JFinancas.exceptions.UsuarioJaCadastradoExcpetion;
 import br.ifrn.poo.JFinancas.modelo.Registradora;
 import br.ifrn.poo.JFinancas.modelo.Usuario;
 
@@ -19,14 +21,14 @@ public class UsuarioDAO {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
-	public void adiciona(Usuario usuario) {
+	public void adiciona(Usuario usuario) throws UsuarioJaCadastradoExcpetion {
 		String sql1 = "insert into registradoras default values";
 		
         String sql = "insert into usuarios " +
                 "(nome,saldo,senha,id_registradora)" +
                 " values (?,?,?,?)";
         int id = 0;
-
+        
         try {
             // prepared statement para inserção
         	PreparedStatement stmt = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
@@ -61,7 +63,7 @@ public class UsuarioDAO {
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+        	throw new UsuarioJaCadastradoExcpetion();
         }
     }
 	
@@ -93,6 +95,8 @@ public class UsuarioDAO {
             
             rs.close();
             stmt.close();
+            
+            System.out.println(usr);
             
             if (usr != null)
             	return usr;

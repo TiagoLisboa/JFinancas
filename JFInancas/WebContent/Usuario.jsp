@@ -201,6 +201,7 @@ else
 </div>
 <h4>Limitadores</h4>
 <a href="Extrato.jsp"><h4>Gerar extrato</h4></a>
+<a href="logout"><h4>Desconectar</h4></a> 
 <table>
 	<% for (Limitador l : usuario.getRegistradora().getLimitadores()) {
 		float t = l.calcularTransacoes(usuario.getRegistradora().getMovimentacoes()); 

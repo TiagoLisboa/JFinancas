@@ -17,7 +17,7 @@ import br.ifrn.poo.JFinancas.modelo.Usuario;
 /**
  * Servlet implementation class Abc
  */
-@WebServlet("/login")
+@WebServlet({"/login"})
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,7 +33,14 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("login.jsp");
+		boolean isActiveUser = UsuarioController.getActiveUser() != null;
+		
+		request.setAttribute("isnotactive", !isActiveUser);
+
+		if (isActiveUser)
+			response.sendRedirect("home");
+		else
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
 	/**
@@ -43,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String nome = request.getParameter("usr");
 		String passwd = request.getParameter("passwd");
+		request.setAttribute("isnotactive", true);
 		try {
 			Usuario usuario = new Usuario (0, nome, passwd);
 			UsuarioDAO udao = new UsuarioDAO();

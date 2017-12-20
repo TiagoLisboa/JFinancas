@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	if (request.getAttribute("isnotactive") == null)
+		response.sendRedirect("login");
+
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
   <head>
@@ -40,18 +46,15 @@
               <div class="panel-body">
                 <form action="login" method="post">
                   <div class="form-group">
-                  	<% if (request.getAttribute("loginOuSenhaIncorreto") != null) { %>
-      					<p id="loginError" style="color: red">Login ou Senha incorretos</p>
-    				<% } %>
                     <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
                       <label for="inputUser" class="sr-only">Usuário</label>
                       <input type="text" class="form-control" id="inputUser" name="usr" placeholder="Usuário" required value="<%= request.getAttribute("usuarioTentado") != null ?  request.getAttribute("usuarioTentado") : ""%>"/>
-						<%
-                      		if (request.getAttribute("usuarioIncorreto") != null) { %>
-                        	<p style="color: red">Usuario não encontrado</p>
-                      	<% } %>
                     </div>
+                    
+                    <% if (request.getAttribute("loginOuSenhaIncorreto") != null) { %>
+      					<p id="loginError" style="color: red">Login ou Senha incorretos</p>
+    				<% } %>
                   </div>
 
                   <div class="form-group">

@@ -64,6 +64,9 @@
                   <div class="input-group">
                     <button type="submit" class="btn btn-lg btn-light btn-block"><span>Cadastrar <i class="fas fa-sign-in-alt" aria-hidden="true"></i></span></button>
                   </div> 
+                  <% if(request.getAttribute("jaCadastrado")!=null){%>
+                  	<p style="color: red">Usuário já cadastrado</p>
+                  <%} %>
                   <hr>
                 </form>
                 <div class="#">

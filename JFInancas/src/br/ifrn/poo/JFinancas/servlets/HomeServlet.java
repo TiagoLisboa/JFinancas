@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ifrn.poo.JFinancas.controle.UsuarioController;
+
 /**
  * Servlet implementation class HomeServlet
  */
@@ -27,7 +29,14 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setAttribute("usuario", UsuarioController.getActiveUser());
+		
+		if(UsuarioController.getActiveUser()==null) {
+			response.sendRedirect("login");
+			return;
+		}
+			
+		request.getRequestDispatcher("Usuario.jsp").forward(request, response);
 	}
 
 	/**

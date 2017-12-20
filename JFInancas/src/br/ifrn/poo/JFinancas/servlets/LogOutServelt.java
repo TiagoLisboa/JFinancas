@@ -7,22 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ifrn.poo.JFinancas.DAO.UsuarioDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
-import br.ifrn.poo.JFinancas.exceptions.UsuarioJaCadastradoExcpetion;
-import br.ifrn.poo.JFinancas.modelo.Usuario;
 
 /**
- * Servlet implementation class RegistrarUsuarioServlet
+ * Servlet implementation class LogOutServelt
  */
-@WebServlet("/registrar")
-public class RegistrarUsuarioServlet extends HttpServlet {
+@WebServlet("/logout")
+public class LogOutServelt extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegistrarUsuarioServlet() {
+    public LogOutServelt() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +29,8 @@ public class RegistrarUsuarioServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.sendRedirect("registrar.jsp");
+		UsuarioController.setActiveUser(null);
+		response.sendRedirect("login");
 	}
 
 	/**
@@ -40,22 +38,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String nome = request.getParameter("nome");
-		String saldo = request.getParameter("saldo");
-		String passwd = request.getParameter("passwd");
-		Usuario usuario = new Usuario(Float.parseFloat(saldo), nome, passwd);
-		UsuarioDAO udao = new UsuarioDAO();
-		try {
-			udao.adiciona(usuario);
-		} catch(UsuarioJaCadastradoExcpetion e) {
-			request.setAttribute("jaCadastrado", true);
-			request.getRequestDispatcher("registrar.jsp").forward(request, response);
-			return;
-		}
-		
-		udao.close();
-		//UsuarioController.registrarUsuario(nome, Float.parseFloat(saldo), passwd);
-		response.sendRedirect("login.jsp");
+		doGet(request, response);
 	}
 
 }
