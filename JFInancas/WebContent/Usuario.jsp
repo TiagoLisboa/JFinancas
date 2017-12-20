@@ -10,8 +10,11 @@
     	java.text.SimpleDateFormat" 
 %>
 <%
-if (UsuarioController.getActiveUser() == null) { 
-	response.sendRedirect("login");
+
+Usuario usuario = (Usuario)request.getAttribute("usuario");
+
+if (usuario == null ) { 
+	response.sendRedirect("home");
 } else {%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -43,7 +46,7 @@ else
 		
 		%>
 		
-		<h2> <%= UsuarioController.getActiveUser().getNome() %> - R$<%= UsuarioController.getActiveUser().getSaldo() %></h2>
+		<h2> <%= usuario.getNome() %> - R$<%= usuario.getSaldo() %></h2>
 		<h2>
 		<a href="Limitadores.jsp">Limitadores</a>
 		</h2>		
@@ -104,7 +107,7 @@ else
 			</tr>
 			<%
 				
-			for (Limitador l : UsuarioController.getActiveUser().getRegistradora().getLimitadores()) {
+			for (Limitador l : usuario.getRegistradora().getLimitadores()) {
 				Calendar c = Calendar.getInstance ();
 				c.setTime (l.getInicio());
 				ArrayList<String> dias = new ArrayList<String>();
@@ -163,7 +166,7 @@ else
 				    %>
 				    
 				    <td> <%
-				    for (Movimentacao m : UsuarioController.getActiveUser().getRegistradora().getMovimentacoes() ) {
+				    for (Movimentacao m : usuario.getRegistradora().getMovimentacoes() ) {
 				    	if (format.format(m.getData()).equals(days[i])) {
 				    	%>
 				    	
@@ -199,8 +202,8 @@ else
 <h4>Limitadores</h4>
 <a href="Extrato.jsp"><h4>Gerar extrato</h4></a>
 <table>
-	<% for (Limitador l : UsuarioController.getActiveUser().getRegistradora().getLimitadores()) {
-		float t = l.calcularTransacoes(UsuarioController.getActiveUser().getRegistradora().getMovimentacoes()); 
+	<% for (Limitador l : usuario.getRegistradora().getLimitadores()) {
+		float t = l.calcularTransacoes(usuario.getRegistradora().getMovimentacoes()); 
 	%>
 		<tr>
 			<td style="width: 300px; background-color: <%= l instanceof Teto ? "red" : "green" %>;" > <%= l.getNome() + " - " + l.getTipo().getNome() %> </td> 
