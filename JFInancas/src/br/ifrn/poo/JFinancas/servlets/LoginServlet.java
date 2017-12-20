@@ -17,7 +17,7 @@ import br.ifrn.poo.JFinancas.modelo.Usuario;
 /**
  * Servlet implementation class Abc
  */
-@WebServlet(urlPatterns = {"/login", "/"})
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
