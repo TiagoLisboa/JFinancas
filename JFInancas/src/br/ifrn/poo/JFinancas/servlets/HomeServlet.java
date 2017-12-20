@@ -32,7 +32,8 @@ public class HomeServlet extends HttpServlet {
 		request.setAttribute("usuario", UsuarioController.getActiveUser());
 		
 		if(UsuarioController.getActiveUser()==null) {
-			response.sendRedirect("home");
+			response.sendRedirect("login");
+			return;
 		} 
 			
 		request.getRequestDispatcher("Usuario.jsp").forward(request, response);

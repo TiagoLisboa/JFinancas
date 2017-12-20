@@ -2,6 +2,7 @@ package br.ifrn.poo.JFinancas.servlets;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,11 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ifrn.poo.JFinancas.DAO.TipoDAO;
 import br.ifrn.poo.JFinancas.DAO.UsuarioDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.exceptions.LoginOuSenhaIncorretoException;
 import br.ifrn.poo.JFinancas.modelo.Usuario;
-
+import br.ifrn.poo.JFinancas.modelo.Tipo;
 /**
  * Servlet implementation class Abc
  */
@@ -51,6 +53,9 @@ public class LoginServlet extends HttpServlet {
 		String nome = request.getParameter("usr");
 		String passwd = request.getParameter("passwd");
 		request.setAttribute("isnotactive", true);
+		TipoDAO tdao = new TipoDAO();
+		ArrayList<Tipo> tipos = tdao.getAll();
+		UsuarioController.setTipos(tipos);
 		try {
 			Usuario usuario = new Usuario (0, nome, passwd);
 			UsuarioDAO udao = new UsuarioDAO();

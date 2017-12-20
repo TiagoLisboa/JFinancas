@@ -120,12 +120,8 @@ public class LimitadorDAO {
         	Date inicio = limitador.getInicio();
         	Date fim = limitador.getFim();
         	String categoria = limitador instanceof Teto ? "Teto" : "Meta";
-        	
-        	String sqlt = "UPDATE limitadores " + 
-    				"SET id_registradora="+ id_registradora +", id_tipo="+id_tipo+", nome="+nome+", valor="+valor+", inicio="+inicio+", fim="+fim+", categoria="+categoria+" " + 
-    				"WHERE id="+limitador.getId();
-        	
-        	System.out.println(sqlt);
+
+       
         	
         	stmt.setInt(1, id_registradora);
         	stmt.setInt(2, id_tipo);
@@ -149,7 +145,29 @@ public class LimitadorDAO {
         }
     }
 	
-	
+	public void deletar(Limitador limitador) {
+		String sql1 = "DELETE FROM limitadores " + 
+				"WHERE id=?";
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		
+        try {
+            // prepared statement para inserção
+        	PreparedStatement stmt = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+        	
+        	stmt.setInt(1, limitador.getId());
+        	
+        	// insere
+        	int affectedRows = stmt.executeUpdate();
+        	
+        	if (affectedRows == 0)
+        		throw new SQLException("Não foi possivel cadastrar limitador");
+        	
+                	
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 	
 	
 	public void close () {

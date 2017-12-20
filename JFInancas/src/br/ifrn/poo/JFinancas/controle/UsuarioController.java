@@ -22,11 +22,6 @@ public class UsuarioController {
 	}
 	
 	public static void setActiveUser (Usuario usr) {
-		tipos.add (new Tipo("Alimentação"));
-		tipos.add (new Tipo("Entrentenimento"));
-		tipos.add (new Tipo("Transporte"));
-		tipos.add (new Tipo("Contas"));
-		tipos.add (new Tipo("Domestico"));
 		activeUser = usr;
 	}
 	
@@ -53,6 +48,10 @@ public class UsuarioController {
 	
 	public static ArrayList<Tipo> getTipos() {
 		return tipos;
+	}
+	
+	public static void setTipos(ArrayList<Tipo> s) {
+		tipos = s;
 	}
 	
 	public static Tipo procurarTipo(String nome) throws TipoNaoEncontradoException {

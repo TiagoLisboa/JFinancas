@@ -26,6 +26,10 @@ public abstract class Limitador {
 		this.tipo = tipo;
 	}
 	
+	public Limitador(int id) {
+		super();
+		this.id = id;
+	}
 	public Limitador(String nome, float valor, Date inicio, Date fim, Tipo tipo) {
 		this(nome, valor, inicio, fim, tipo, -1);
 	}

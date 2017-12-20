@@ -24,6 +24,10 @@ public class Teto extends Limitador{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Teto(int id) {
+		super(id);
+	}
+	
 	public float calcularTransacoes (ArrayList<Movimentacao> mov) {
 		float total = 0;
 		for (Movimentacao m : mov) {

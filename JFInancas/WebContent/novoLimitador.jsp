@@ -38,7 +38,7 @@ if (UsuarioController.getActiveUser() == null) {
 				Tipo:<br>
 					<select name="tipo">
 					<% int i = 0; for (Tipo t : UsuarioController.getTipos()) { %>
-						<option value="<%= i %>"><%= t.getNome() %></option>
+						<option value="<%= t.getId() %>"><%= t.getNome() %></option>
 					<% i++;} %>
 				</select>
 				<br>

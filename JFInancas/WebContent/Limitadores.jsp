@@ -79,7 +79,7 @@
 				<td><%= format.format(l.getInicio()) %></td>
 				<td><%= format.format(l.getFim())%></td>
 				<td>
-				<a href="delLimitador?idx=<%=idx%>">Deletar</a>
+				<a href="delLimitador?idx=<%=l.getId()%>">Deletar</a>
 				<a href="updateLimitador?idx=<%=idx%>">Editar</a>
 				</td>
 			</tr>
