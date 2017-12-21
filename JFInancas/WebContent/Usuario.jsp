@@ -72,7 +72,7 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			</a>
 		</div>
 		<div class="col-sm-10">	
-			<table class="table table-striped">
+			<table class="table table-striped table-bordered">
 				<thead class="thead-dark">
 					<tr>
 						<th>
@@ -119,10 +119,18 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 				</thead>
 				<tbody>
 					<%
-						
+					now = Calendar.getInstance();
+					delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 1 + 7*offset; //add 2 if your week start on monday
+					now.add(Calendar.DAY_OF_MONTH, delta );
+					
 					for (Limitador l : usuario.getRegistradora().getLimitadores()) {
 						Calendar c = Calendar.getInstance ();
-						c.setTime (l.getInicio());
+						
+						if (now.getTime().after(l.getInicio()))
+							c.setTime (now.getTime());
+						else
+							c.setTime (l.getInicio());
+						
 						ArrayList<String> dias = new ArrayList<String>();
 						while ( true ) {
 							dias.add(format.format(c.getTime()));
@@ -140,14 +148,15 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 						days = new String[7];
 						delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 1 + 7*offset; //add 2 if your week start on monday
 						now.add(Calendar.DAY_OF_MONTH, delta );
+						boolean opa = false;
 						for (int i = 0; i < 7; i++)
 						{
 								days[i] = format.format(now.getTime());
 								%>
 								
-								<% if (dias.contains(days[i])) {  %> 
-								<td style="padding: 2px 10px;background-color: <%= l instanceof Teto ? "rgba(255,0,0,0.7)" : "rgba(0,255,0,0.7)" %>;"><%= l.getNome() %> - <%= l.getTipo() %></td>
-								<% } else { %>
+								<% if (dias.contains(days[i]) && !opa) {   %> 
+								<td colspan="<%= dias.size() - i %>" style="text-align: center; padding: 2px 10px;background-color: <%= l instanceof Teto ? "rgba(255,0,0,0.7)" : "rgba(0,255,0,0.7)" %>;"><%= l.getNome() %> - <%= l.getTipo() %></td>
+								<% opa = true; i = dias.size() - i;} else { %>
 								<td></td>
 								<% } %> 
 								
