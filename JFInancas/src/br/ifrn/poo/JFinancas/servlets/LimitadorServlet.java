@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ifrn.poo.JFinancas.DAO.LimitadorDAO;
+import br.ifrn.poo.JFinancas.DAO.TipoDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.modelo.Meta;
 import br.ifrn.poo.JFinancas.modelo.Registradora;
@@ -47,12 +48,13 @@ public class LimitadorServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		TipoDAO tdao = new TipoDAO();
 		
 		String data1 = request.getParameter("data1");
 		String data2 = request.getParameter("data2");
 		String nome = request.getParameter("nome");
 		float valor = Float.parseFloat(request.getParameter("valor"));
-		Tipo tipo = UsuarioController.getTipos().get(Integer.parseInt(request.getParameter("tipo")));
+		Tipo tipo = tdao.getById(new Tipo("", Integer.parseInt(request.getParameter("tipo"))));
 		String categoria = request.getParameter("categoria");
 		
 		LimitadorDAO ldao = new LimitadorDAO();
@@ -84,6 +86,7 @@ public class LimitadorServlet extends HttpServlet {
 			e.printStackTrace();
 		} finally {
 			ldao.close();
+			tdao.close();
 		}
 		
 		response.sendRedirect("Limitadores.jsp");

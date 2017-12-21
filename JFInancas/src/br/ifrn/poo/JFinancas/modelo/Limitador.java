@@ -41,6 +41,10 @@ public abstract class Limitador {
 	public float calcularTransacoes (ArrayList<Movimentacao> mov) {
 		return 0;
 	}
+	
+	public ArrayList<Movimentacao> procurarTransacoes (ArrayList<Movimentacao> mov) {
+		return new ArrayList<Movimentacao>();
+	}
 
 	public float getValor() {
 		return valor;

@@ -8,7 +8,8 @@
     	br.ifrn.poo.JFinancas.modelo.Limitador,
     	br.ifrn.poo.JFinancas.modelo.Teto,
     	java.text.SimpleDateFormat,
-    	java.math.BigDecimal" 
+    	java.math.BigDecimal,
+    	java.text.DateFormatSymbols" 
 %>
 <%
 
@@ -26,7 +27,9 @@ if (usuario == null ) {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Página do usuário</title>
+	
 	<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
 	<link href="./fontawesome-free-5.0.1/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet">
 	<link href="./css/main.css" rel="stylesheet" type="text/css" />
 </head>
@@ -72,34 +75,28 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 	<div class="row">
 		<div class="col-sm-1 full-size fa-left">
 			<a href="?offset=<%= offset-1 %>">
-				<span class="fa fa-chevron-left fa-3 " aria-hidden="true"></span>
+				<span class="fa fa-chevron-left fa-3" aria-hidden="true"></span>
 			</a>
 		</div>
 		<div class="col-sm-10">	
-			<table class="table table-striped table-bordered">
+			<table class="table table-bordered">
 				<thead class="thead-dark">
 					<tr>
-						<th>
-						Domingo
-						</th>
-						<th>
-						Segunda-feira
-						</th>
-						<th>
-						Terça-feira
-						</th>
-						<th>
-						Quarta-feira
-						</th>
-						<th>
-						Quinta-feira
-						</th>
-						<th>
-						Sexta-feira
-						</th>
-						<th>
-						Sábado
-						</th>	
+					<%
+						DateFormatSymbols sym = new DateFormatSymbols();
+						String dayNames[] = sym.getWeekdays();
+						for (String s : dayNames) { 
+							if (s != "") {
+						%>
+							
+							<th>
+								<%= s %> <br />
+							</th>
+							
+					<%		
+							}
+						}
+					%>
 					</tr>
 					<tr>
 						<%
@@ -143,11 +140,8 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 							c.add (Calendar.DATE, 1);
 						}
 						
-						if ( format.format(c.getTime()).equals(format.format(l.getFim())) ) {
-							dias.add(format.format(c.getTime()));
-						}
-						
-						
+						if (dias.size() > 0) {
+							if (Arrays.asList(days).contains(dias.get(0)) || Arrays.asList(days).contains(dias.get(dias.size()-1))) {
 						
 					%>
 					<tr>
@@ -158,15 +152,17 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 							%>
 							
 							<% if (!opa && dias.contains(days[i])) {   %> 
-								<td colspan="<%= dias.size() - i %>" style="text-align: center; padding: 2px 10px;background-color: <%= l instanceof Teto ? "rgba(255,0,0,0.7)" : "rgba(0,255,0,0.7)" %>;"><%= l.getNome() %> - <%= l.getTipo() %></td>
-								<% opa = true; i = dias.size() -1;} else { %>
+								<td colspan="<%= dias.size() %>" style="cursor: help; text-align: center; padding: 2px 10px;background-color: <%= l instanceof Teto ? "rgba(255,0,0,0.7)" : "rgba(0,255,0,0.7)" %>;" title="<%= l.getTipo() %>"><%= l.getNome() %></td>
+							<% opa = true; i += dias.size()-1;} else { %>
 								<td></td>
 							<% } 
 						}
 						
 						%>
 					</tr>
-					<% } %>
+					<% 		}
+						} 
+					} %>
 					<tr>
 						<%
 						
@@ -179,15 +175,18 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 									if (format.format(m.getData()).equals(days[i])) {
 									%>
 									
-									<p title="<%=m.getNome()%>" class="movimentacao" 
+									<div class="movimentacao" 
 										style="background-color: <%= m instanceof Ganho ? "rgba(0,255,0,0.2)" : "rgba(255,0,0,0.2)" %>;">
+										<span title="<%=m.getNome()%>">
 										<%= m instanceof Ganho ? "+" : "-" %> R$  
 										<% 
 											BigDecimal bigd = new BigDecimal(m.getValor());
 											bigd=bigd.setScale(2,BigDecimal.ROUND_HALF_EVEN);
 									        out.println(bigd);
 										%>
-									</p>
+										</span>
+										<a title="excluir" href="movimentacao?delete=1" style="color: red;">X</a>
+									</div>
 									
 									<%
 									}
@@ -220,18 +219,78 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		</div>
 	</div>	
 </div>
-<table>
-	<% for (Limitador l : usuario.getRegistradora().getLimitadores()) {
-		float t = l.calcularTransacoes(usuario.getRegistradora().getMovimentacoes()); 
-	%>
-		<tr>
-			<td style="width: 300px; background-color: <%= l instanceof Teto ? "red" : "green" %>;" > <%= l.getNome() + " - " + l.getTipo().getNome() %> </td> 
-			<td><progress value="<%= t %>" max="<%= l.getValor() %>" /></td>
-			<td><% if (t > l.getValor()) %><span style="color: red">X</span></td>
-		</tr>
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>Limitadores</h3>
 		
-	<% } %>
-</tabl>
+			<% for (Limitador l : UsuarioController.getActiveUser().getRegistradora().getLimitadores()) {
+				float t = l.calcularTransacoes(usuario.getRegistradora().getMovimentacoes()); 
+				BigDecimal bigd = new BigDecimal(l.getValor());
+				bigd=bigd.setScale(2,BigDecimal.ROUND_HALF_EVEN);
+			%>
+			
+			<div class="card">
+				<div class="card-header" style="background-color: <%= l instanceof Teto ? "#dc3545" : "#28a745"  %>;">
+					<%= l.getNome() + " - " + (l instanceof Teto ? "Teto" : "Meta")  + " (" + l.getTipo() + ") de R$ " + bigd + " entre " + format.format(l.getInicio()) + " e " + format.format(l.getFim())%>
+				</div>
+				<div class="card-body">
+					<div class="progress">
+						<div class="progress-bar <%
+							if ((t  / l.getValor())*100 > 100) {
+								out.println("bg-success");
+							} else if ((t  / l.getValor())*100 > 50) {
+								out.println("bg-warning");
+							} else {
+								out.println("bg-danger");
+							}
+							%>" role="progressbar" 
+							
+						style="width: <%= (t  / l.getValor())*100 %>%"><%= (t  / l.getValor())*100 %>%</div>
+					</div>
+					
+					<br />
+					
+					<table class="table">
+						<thead>
+							<tr><th>Transação</th> <th>Data</th> <th>Valor</th></tr>
+						</thead>
+						<tbody>
+							<% for (Movimentacao mm : l.procurarTransacoes(usuario.getRegistradora().getMovimentacoes()) ) { %>
+							<tr>
+								<td>
+									<%= mm.getNome() %>
+								</td>
+								<td>
+									<%= format.format(mm.getData()) %>
+								</td>
+								<td style="color: <%= mm instanceof Ganho ? "rgba(0,255,0,0.7)" : "rgba(255,0,0,0.7)" %>;">
+									<%= mm instanceof Ganho ? "+" : "-" %> R$  
+									<% 
+										bigd = new BigDecimal(mm.getValor());
+										bigd=bigd.setScale(2,BigDecimal.ROUND_HALF_EVEN);
+								        out.println(bigd);
+									%>
+								</td>
+							</tr>
+							<% } %>
+						<tbody>
+					</table>
+				</div>
+			</div>
+			
+			<br />
+			
+			
+			<% } %>
+		</div>
+	</div>
+</div>
+
+
 
 </body>
 </html>

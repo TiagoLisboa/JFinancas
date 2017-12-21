@@ -42,5 +42,20 @@ public class Meta extends Limitador {
 		}
 		return total;
 	}
+	
+	public ArrayList<Movimentacao> procurarTransacoes (ArrayList<Movimentacao> mov) {
+		ArrayList<Movimentacao> transacoes = new ArrayList<Movimentacao>();
+		for (Movimentacao m : mov) {
+			if (m instanceof Ganho) {
+				if ((m.getData().after(this.getInicio()) &&  m.getData().before(this.getFim())) 
+						|| m.getData().equals(this.getInicio())  || m.getData().equals(this.getFim())) {
+					if (m.getTipo().equals(this.getTipo())) {
+						transacoes.add( m );
+					}
+				}
+			}
+		}
+		return transacoes;
+	}
     
 }

@@ -34,4 +34,11 @@ CREATE TABLE IF NOT EXISTS `limitadores` (
 	`categoria`	TEXT NOT NULL CHECK(categoria = 'Meta' OR categoria = 'Teto'),
 	FOREIGN KEY(`id_tipo`) REFERENCES `tipos`(`id`)
 );
+INSERT INTO tipos (nome) values ("Alimentação");
+INSERT INTO tipos (nome) values ("Transporte");
+INSERT INTO tipos (nome) values ("Entretenimento");
+INSERT INTO tipos (nome) values ("Medicamentos");
+INSERT INTO tipos (nome) values ("Saude");
+INSERT INTO tipos (nome) values ("Contas");
+INSERT INTO tipos (nome) values ("Livros");
 COMMIT;

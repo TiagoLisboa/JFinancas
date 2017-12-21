@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ifrn.poo.JFinancas.DAO.MovimentacaoDAO;
+import br.ifrn.poo.JFinancas.DAO.TipoDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.modelo.Ganho;
 import br.ifrn.poo.JFinancas.modelo.Gasto;
@@ -65,12 +66,13 @@ public class MovimentacaoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MovimentacaoDAO mdao = new MovimentacaoDAO();
+		TipoDAO tdao = new TipoDAO();
 		
 		String data = request.getParameter("data");
 		float valor = Float.parseFloat(request.getParameter("valor"));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String nome = request.getParameter("nome");
-		Tipo tipo = UsuarioController.getTipos().get(Integer.parseInt(request.getParameter("tipo")));
+		Tipo tipo = tdao.getById(new Tipo("", Integer.parseInt(request.getParameter("tipo"))));
 		String categoria = request.getParameter("categoria");
 		Registradora r = UsuarioController.getActiveUser().getRegistradora();
 		
@@ -92,6 +94,7 @@ public class MovimentacaoServlet extends HttpServlet {
 			e.printStackTrace();
 		} finally {
 			mdao.close();
+			tdao.close();
 		}
 		
 		response.sendRedirect("Usuario.jsp");

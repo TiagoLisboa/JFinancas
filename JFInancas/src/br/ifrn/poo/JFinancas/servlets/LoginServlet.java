@@ -1,6 +1,7 @@
 package br.ifrn.poo.JFinancas.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -35,6 +36,8 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean isActiveUser = UsuarioController.getActiveUser() != null;
+		
+		PrintWriter w = response.getWriter();
 		
 		request.setAttribute("isnotactive", !isActiveUser);
 

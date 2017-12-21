@@ -4,7 +4,7 @@
             auth="Container" 
             type="javax.sql.DataSource" 
             driverClassName="org.sqlite.JDBC"
-            url="jdbc:sqlite:dbs/jfinancas.db"
+            url="jdbc:sqlite:/${catalina.home}/dbs/jfinancas.db"
             factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory">
   </Resource>
 </Context>
