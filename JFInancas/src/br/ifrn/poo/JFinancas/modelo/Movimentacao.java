@@ -23,6 +23,11 @@ public abstract class Movimentacao {
 		this.tipo = tipo;
 	}
 	
+	public Movimentacao(int id) {
+		super();
+		this.id = id;
+	}
+	
 	public Movimentacao(Date data, float valor, String nome, Tipo tipo) {
 		this(data, valor, nome, tipo, -1);
 	}

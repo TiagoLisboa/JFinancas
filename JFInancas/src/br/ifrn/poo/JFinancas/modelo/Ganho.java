@@ -24,5 +24,10 @@ public class Ganho extends Movimentacao{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Ganho(int id) {
+		super(id);
+		// TODO Auto-generated constructor stub
+	}
+	
     
 }

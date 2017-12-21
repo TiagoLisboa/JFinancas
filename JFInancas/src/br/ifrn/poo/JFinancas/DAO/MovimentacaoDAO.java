@@ -101,6 +101,29 @@ public class MovimentacaoDAO {
         }
     }
 	
+	public void delete (Movimentacao mov) {
+		String sql1 = "DELETE FROM movimentacoes " + 
+				"WHERE id=?";
+		
+        try {
+            // prepared statement para inserção
+        	PreparedStatement stmt = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+        	
+        	stmt.setInt(1, mov.getId());
+        	
+        	// insere
+        	int affectedRows = stmt.executeUpdate();
+        	
+        	if (affectedRows == 0)
+        		throw new SQLException("Não foi possivel deletar movimentacao");
+        	
+                	
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+	}
+	
 	
 	public void close () {
 		try {

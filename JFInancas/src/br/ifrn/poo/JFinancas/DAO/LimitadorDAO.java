@@ -161,7 +161,7 @@ public class LimitadorDAO {
         	int affectedRows = stmt.executeUpdate();
         	
         	if (affectedRows == 0)
-        		throw new SQLException("Não foi possivel cadastrar limitador");
+        		throw new SQLException("Não foi possivel deletar limitador");
         	
                 	
             stmt.close();

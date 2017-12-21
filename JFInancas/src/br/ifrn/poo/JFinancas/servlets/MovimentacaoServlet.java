@@ -38,27 +38,44 @@ public class MovimentacaoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String data = request.getParameter("data");
+		String idDelete = request.getParameter("delete");
 		
-		if (data == null) {
-			response.sendRedirect("home");
-			return;
-		}
+		if (idDelete != null) {
+			Gasto g = new Gasto(Integer.parseInt(idDelete));
+			MovimentacaoDAO mdao = new MovimentacaoDAO();
+			Registradora r = UsuarioController.getActiveUser().getRegistradora();
+			mdao.delete(g);
+			try {
+				r.setMovimentacoes(mdao.getByIdRegistradora(r));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			} finally {
+				mdao.close();
+				response.sendRedirect("home");
+			}
+		} else {
+		
+			if (data == null) {
+				response.sendRedirect("home");
+				return;
+			}
+				
 			
-		
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			Date d = sdf.parse(data);
-			sdf = new SimpleDateFormat("yyyy-MM-dd");
-			System.out.println(sdf.format(d));
-			request.setAttribute("data", sdf.format(d));
-		} catch (ParseException e) {
-			e.printStackTrace();
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				Date d = sdf.parse(data);
+				sdf = new SimpleDateFormat("yyyy-MM-dd");
+				System.out.println(sdf.format(d));
+				request.setAttribute("data", sdf.format(d));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			if (UsuarioController.getActiveUser() != null)
+				request.getRequestDispatcher("NovaMovimentacao.jsp").forward(request, response);
+			else
+				response.sendRedirect("login");
 		}
-		
-		if (UsuarioController.getActiveUser() != null)
-			request.getRequestDispatcher("NovaMovimentacao.jsp").forward(request, response);
-		else
-			response.sendRedirect("login");
 	}
 
 	/**

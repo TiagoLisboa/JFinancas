@@ -185,7 +185,7 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 									        out.println(bigd);
 										%>
 										</span>
-										<a title="excluir" href="movimentacao?delete=1" style="color: red;">X</a>
+										<a title="excluir" href="movimentacao?delete=<%= m.getId() %>" style="color: red;">X</a>
 									</div>
 									
 									<%

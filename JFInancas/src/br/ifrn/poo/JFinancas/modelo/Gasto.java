@@ -23,5 +23,10 @@ public class Gasto extends Movimentacao{
 		super(data, valor, nome, tipo, id);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Gasto(int id) {
+		super(id);
+		// TODO Auto-generated constructor stub
+	}
     
 }
