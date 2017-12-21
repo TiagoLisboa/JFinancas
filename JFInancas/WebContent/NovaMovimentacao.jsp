@@ -4,9 +4,12 @@
     				br.ifrn.poo.JFinancas.modelo.Tipo"%>
     
 <%
-if (UsuarioController.getActiveUser() == null) { 
-	response.sendRedirect("login");
-} else {%>
+if (request.getAttribute("data") == null) {
+	response.sendRedirect("movimentacao");
+} else {
+	System.out.println(request.getAttribute("data"));
+	String data = (String)request.getAttribute("data");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,7 +22,7 @@ if (UsuarioController.getActiveUser() == null) {
 		<form action="movimentacao" method="POST">
 			<label>
 				Data:<br>
-				<input type="date" name="data">
+				<input type="date" name="data" value=<%= data %>>
 				</br>
 			</label>
 			<label>

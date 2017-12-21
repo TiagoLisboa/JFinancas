@@ -36,8 +36,26 @@ public class MovimentacaoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String data = request.getParameter("data");
+		
+		if (data == null) {
+			response.sendRedirect("home");
+			return;
+		}
+			
+		
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Date d = sdf.parse(data);
+			sdf = new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println(sdf.format(d));
+			request.setAttribute("data", sdf.format(d));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		if (UsuarioController.getActiveUser() != null)
-			response.sendRedirect("NovaMovimentacao.jsp");
+			request.getRequestDispatcher("NovaMovimentacao.jsp").forward(request, response);
 		else
 			response.sendRedirect("login");
 	}

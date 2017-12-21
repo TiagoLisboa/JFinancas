@@ -19,7 +19,7 @@
     <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
     <!-- Custom & fontawesome-->
-    <link href="fontawesome-free-5.0.1/web-fonts-with-css/css/fontawesome-all.min.css"" rel="stylesheet">
+    <link href="fontawesome-free-5.0.1/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./css/login.css"/>
 	
 

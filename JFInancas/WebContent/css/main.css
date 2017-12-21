@@ -1,0 +1,41 @@
+.full-size a {
+	position: relative;
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.full-size a span {
+	position: absolute;
+	top: 40%;
+}
+
+.fa-right a span {
+	right: 50%;
+}
+
+.fa-left a span {
+	left: 50%;
+}
+
+.fa-3 {
+	font-size: 3em;
+}
+
+.movimentacao {
+	padding: 10px;
+	margin: 0;
+	cursor: help;
+	text-align: center;
+}
+
+.plus {
+	display: block;
+	width: 100%;
+	text-align: center;
+	padding: 15px;
+}
+
+.plus:hover {
+	background-color: rgba(0,0,0,0.1); 
+}
