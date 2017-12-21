@@ -16,14 +16,18 @@ Usuario usuario = (Usuario)request.getAttribute("usuario");
 
 if (usuario == null ) { 
 	response.sendRedirect("home");
-} else {%>
+} else {
+
+
+
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Página do usuário</title>
 	<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="fontawesome-free-5.0.1/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet">
+	<link href="./fontawesome-free-5.0.1/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet">
 	<link href="./css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -132,36 +136,32 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 							c.setTime (l.getInicio());
 						
 						ArrayList<String> dias = new ArrayList<String>();
-						while ( true ) {
+						for ( int j = 0; j < 7; j++ ) {
+							if (c.getTime().after(l.getFim()))
+								break;
 							dias.add(format.format(c.getTime()));
 							c.add (Calendar.DATE, 1);
-							if (format.format(c.getTime()).equals(format.format(l.getFim())))
-								break;
 						}
-						dias.add(format.format(c.getTime()));
+						
+						if ( format.format(c.getTime()).equals(format.format(l.getFim())) ) {
+							dias.add(format.format(c.getTime()));
+						}
+						
+						
 						
 					%>
 					<tr>
 					
 					<%
-						now = Calendar.getInstance();
-						days = new String[7];
-						delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 1 + 7*offset; //add 2 if your week start on monday
-						now.add(Calendar.DAY_OF_MONTH, delta );
 						boolean opa = false;
-						for (int i = 0; i < 7; i++)
-						{
-								days[i] = format.format(now.getTime());
-								%>
-								
-								<% if (dias.contains(days[i]) && !opa) {   %> 
+						for (int i = 0; i < 7; i++) {
+							%>
+							
+							<% if (!opa && dias.contains(days[i])) {   %> 
 								<td colspan="<%= dias.size() - i %>" style="text-align: center; padding: 2px 10px;background-color: <%= l instanceof Teto ? "rgba(255,0,0,0.7)" : "rgba(0,255,0,0.7)" %>;"><%= l.getNome() %> - <%= l.getTipo() %></td>
-								<% opa = true; i = dias.size() - i;} else { %>
+								<% opa = true; i = dias.size() -1;} else { %>
 								<td></td>
-								<% } %> 
-								
-								<%
-								now.add(Calendar.DAY_OF_MONTH, 1);
+							<% } 
 						}
 						
 						%>
@@ -169,13 +169,9 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 					<% } %>
 					<tr>
 						<%
-						now = Calendar.getInstance();
-						days = new String[7];
-						delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 1 + 7*offset; //add 2 if your week start on monday
-						now.add(Calendar.DAY_OF_MONTH, delta );
+						
 						for (int i = 0; i < 7; i++)
 						{
-								days[i] = format.format(now.getTime());
 								%>
 								
 								<td style="padding: 0;"> <%
@@ -200,25 +196,19 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 								</td>
 								
 								<%
-								now.add(Calendar.DAY_OF_MONTH, 1);
 						}
 						
 						%>
 						
 					</tr>
 					<tr>
-						<% now = Calendar.getInstance();
-						days = new String[7];
-						delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 1 + 7*offset; //add 2 if your week start on monday
-						now.add(Calendar.DAY_OF_MONTH, delta );
-						for (int i = 0; i < 7; i++) {
-						days[i] = format.format(now.getTime()); %>
+						<% for (int i = 0; i < 7; i++) { %>
 							<td style="padding: 0;">
 								<a class="plus" href="movimentacao?data=<%= days[i] %>">
 									+
 								</a>
 							</td>
-						<% now.add(Calendar.DAY_OF_MONTH, 1); } %>
+						<% } %>
 					</tr>
 				</tbody>
 			</table>
