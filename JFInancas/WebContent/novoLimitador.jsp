@@ -66,10 +66,10 @@ if (UsuarioController.getActiveUser() == null) {
 				<div class="form-check">
 					Categoria <br />
 					<label class="form-check-label">	
-						<input checked class="form-check-input" type="radio" value="Ganho" name="categoria" required> Ganho
+						<input checked class="form-check-input" type="radio" value="Meta" name="categoria" required> Meta
 					</label>
 					<label class="form-check-label">
-						<input class="form-check-input" type="radio" value="Gasto" name="categoria" required> Gasto
+						<input class="form-check-input" type="radio" value="Teto" name="categoria" required> Teto
 						<br>
 					</label>
 				</div>	

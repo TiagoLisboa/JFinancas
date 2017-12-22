@@ -79,10 +79,10 @@ if (UsuarioController.getActiveUser() == null) {
 				<div class="form-check">
 					Categoria <br />
 					<label class="form-check-label">	
-						<input class="form-check-input" type="radio" value="Ganho" name="categoria" <%= limitador instanceof Teto ? "checked" : "" %> required> Ganho
+						<input class="form-check-input" type="radio" value="Meta" name="categoria" <%= limitador instanceof Teto ? "checked" : "" %> required> Meta
 					</label>
 					<label class="form-check-label">
-						<input class="form-check-input" type="radio" value="Gasto" name="categoria" <%= ! (limitador instanceof Teto) ? "checked" : "" %> required> Gasto
+						<input class="form-check-input" type="radio" value="Teto" name="categoria" <%= ! (limitador instanceof Teto) ? "checked" : "" %> required> Teto
 						<br>
 					</label>
 				</div>	
