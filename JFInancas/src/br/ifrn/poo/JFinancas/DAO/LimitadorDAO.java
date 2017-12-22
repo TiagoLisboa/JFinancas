@@ -149,7 +149,6 @@ public class LimitadorDAO {
 	public void deletar(Limitador limitador) {
 		String sql1 = "DELETE FROM limitadores " + 
 				"WHERE id=?";
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		
         try {
             // prepared statement para inserção

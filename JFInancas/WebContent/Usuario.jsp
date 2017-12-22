@@ -52,23 +52,16 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 %>
 
 <header class="page-header">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-4">
-				<%= UsuarioController.getActiveUser().getNome() %>
-			</div>
-			<div class="col-sm-4">
-			</div>
-			<div class="col-sm-4">
-				<div class="btn-group" role="group">
-					<a class="btn btn-default" href="Limitadores.jsp">Limitadores</a> 
-					<a class="btn btn-default" href="Extrato.jsp">Gerar extrato</a> 
-					<a class="btn btn-default" href="logout">Desconectar</a>
-				</div> 
-			</div>
-		</div>
-	</div>
-	
+	<nav id="navbar-example2" class="navbar navbar-light bg-light">
+	  <a class="navbar-brand" href="home">Home</a>
+	  <ul class="nav nav-pills">
+	    <li class="nav-item">
+	      <a class="nav-link" href="Extrato.jsp">Extrato</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="logout">Desconectar</a>
+	    </li>
+	</nav>
 </header>
 
 <div class="container-fluid">
@@ -149,10 +142,12 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 					<%
 						boolean opa = false;
 						for (int i = 0; i < 7; i++) {
+							BigDecimal bigd = new BigDecimal(l.getValor());
+							bigd=bigd.setScale(2,BigDecimal.ROUND_HALF_EVEN);
 							%>
 							
 							<% if (!opa && dias.contains(days[i])) {   %> 
-								<td colspan="<%= dias.size() %>" style="cursor: help; text-align: center; padding: 2px 10px;background-color: <%= l instanceof Teto ? "rgba(255,0,0,0.7)" : "rgba(0,255,0,0.7)" %>;" title="<%= l.getTipo() %>"><%= l.getNome() %></td>
+								<td colspan="<%= dias.size() %>" style="cursor: help; text-align: center; padding: 2px 10px;background-color: <%= l instanceof Teto ? "rgba(255,0,0,0.7)" : "rgba(0,255,0,0.7)" %>;" title="<%= l.getTipo() %> (R$ <%= bigd %>)"><%= l.getNome() %></td>
 							<% opa = true; i += dias.size()-1;} else { %>
 								<td></td>
 							<% } 
@@ -177,7 +172,7 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 									
 									<div class="movimentacao" 
 										style="background-color: <%= m instanceof Ganho ? "rgba(0,255,0,0.2)" : "rgba(255,0,0,0.2)" %>;">
-										<span title="<%=m.getNome()%>">
+										<span title="<%=m.getNome()%> - <%= m.getTipo() %>">
 										<%= m instanceof Ganho ? "+" : "-" %> R$  
 										<% 
 											BigDecimal bigd = new BigDecimal(m.getValor());
@@ -225,9 +220,10 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 <div class="container">
 	<div class="row">
 		<div class="col-sm-12">
-			<h3>Limitadores</h3>
+			<h3>Limitadores <small style="float: right;"><a title="Novo Limitador" href="novoLimitador">+</a></small></h3>
 		
-			<% for (Limitador l : UsuarioController.getActiveUser().getRegistradora().getLimitadores()) {
+			<% int idx = -1; for (Limitador l : UsuarioController.getActiveUser().getRegistradora().getLimitadores()) {
+				idx++;
 				float t = l.calcularTransacoes(usuario.getRegistradora().getMovimentacoes()); 
 				BigDecimal bigd = new BigDecimal(l.getValor());
 				bigd=bigd.setScale(2,BigDecimal.ROUND_HALF_EVEN);
@@ -236,6 +232,10 @@ SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			<div class="card">
 				<div class="card-header" style="background-color: <%= l instanceof Teto ? "#dc3545" : "#28a745"  %>;">
 					<%= l.getNome() + " - " + (l instanceof Teto ? "Teto" : "Meta")  + " (" + l.getTipo() + ") de R$ " + bigd + " entre " + format.format(l.getInicio()) + " e " + format.format(l.getFim())%>
+					<span style="float: right;">
+						<a href="delLimitador?idx=<%=l.getId()%>">Deletar</a>
+						<a href="updateLimitador?idx=<%=idx%>">Editar</a>
+					</span>
 				</div>
 				<div class="card-body">
 					<div class="progress">

@@ -94,7 +94,7 @@
 			<a href="?pagina=<%= pagina-1 %>"> < </a>
 			<a href="?pagina=<%= pagina+1 %>"> > </a>
 			<br>
-			<a href="Usuario.jsp"> Voltar </a>
+			<a href="home"> Voltar </a>
 </body>
 </html>
 <% } %>

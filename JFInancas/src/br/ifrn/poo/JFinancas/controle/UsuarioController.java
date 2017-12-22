@@ -6,6 +6,7 @@ import br.ifrn.poo.JFinancas.exceptions.SenhaIncorretaException;
 import br.ifrn.poo.JFinancas.exceptions.TipoNaoEncontradoException;
 import br.ifrn.poo.JFinancas.exceptions.UsuarioNaoCadastradoException;
 import br.ifrn.poo.JFinancas.modelo.Tipo;
+import br.ifrn.poo.JFinancas.DAO.TipoDAO;
 import br.ifrn.poo.JFinancas.modelo.Usuario;
 
 public class UsuarioController {
@@ -22,6 +23,9 @@ public class UsuarioController {
 	}
 	
 	public static void setActiveUser (Usuario usr) {
+		TipoDAO tdao = new TipoDAO();
+		tipos = tdao.getAll();
+		tdao.close();
 		activeUser = usr;
 	}
 	

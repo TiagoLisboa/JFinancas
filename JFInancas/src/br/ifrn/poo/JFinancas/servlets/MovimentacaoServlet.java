@@ -1,6 +1,7 @@
 package br.ifrn.poo.JFinancas.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -65,7 +66,6 @@ public class MovimentacaoServlet extends HttpServlet {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Date d = sdf.parse(data);
 				sdf = new SimpleDateFormat("yyyy-MM-dd");
-				System.out.println(sdf.format(d));
 				request.setAttribute("data", sdf.format(d));
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -89,7 +89,32 @@ public class MovimentacaoServlet extends HttpServlet {
 		float valor = Float.parseFloat(request.getParameter("valor"));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String nome = request.getParameter("nome");
-		Tipo tipo = tdao.getById(new Tipo("", Integer.parseInt(request.getParameter("tipo"))));
+		Tipo ntipo = new Tipo(request.getParameter("tipo"), -1);
+		Tipo tipo = null;
+		try {
+			tipo = tdao.getByName(ntipo);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (tipo == null) {
+			try {
+				tdao.adiciona(ntipo);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		try {
+			tipo = tdao.getByName(ntipo);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		String categoria = request.getParameter("categoria");
 		Registradora r = UsuarioController.getActiveUser().getRegistradora();
 		

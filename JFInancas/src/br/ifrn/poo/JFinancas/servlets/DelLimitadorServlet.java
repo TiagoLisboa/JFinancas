@@ -48,7 +48,7 @@ public class DelLimitadorServlet extends HttpServlet {
 				udao.close();
 				ldao.close();
 			}
-			response.sendRedirect("Limitadores.jsp");
+			response.sendRedirect("home");
 		} else {
 			response.sendRedirect("login");
 		}

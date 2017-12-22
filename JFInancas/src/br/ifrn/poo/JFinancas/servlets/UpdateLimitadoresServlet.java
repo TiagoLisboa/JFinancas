@@ -1,6 +1,7 @@
 package br.ifrn.poo.JFinancas.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ifrn.poo.JFinancas.DAO.LimitadorDAO;
 import br.ifrn.poo.JFinancas.DAO.UsuarioDAO;
+import br.ifrn.poo.JFinancas.DAO.TipoDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.modelo.Limitador;
 import br.ifrn.poo.JFinancas.modelo.Meta;
@@ -56,6 +58,7 @@ public class UpdateLimitadoresServlet extends HttpServlet {
 		
 		UsuarioDAO udao = new UsuarioDAO();
 		LimitadorDAO ldao = new LimitadorDAO();
+		TipoDAO tdao = new TipoDAO();
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		String data1 = request.getParameter("data1");
@@ -63,7 +66,33 @@ public class UpdateLimitadoresServlet extends HttpServlet {
 		String nome = request.getParameter("nome");
 		float valor = Float.parseFloat(request.getParameter("valor"));
 		
-		Tipo tipo = new Tipo(request.getParameter("tipo"));
+		Tipo ntipo = new Tipo(request.getParameter("tipo"), -1);
+		Tipo tipo = null;
+		try {
+			tipo = tdao.getByName(ntipo);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (tipo == null) {
+			try {
+				tdao.adiciona(ntipo);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		try {
+			tipo = tdao.getByName(ntipo);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		String categoria = request.getParameter("categoria");
 		
 		try {
@@ -86,9 +115,10 @@ public class UpdateLimitadoresServlet extends HttpServlet {
 		} finally {
 			ldao.close();
 			udao.close();
+			tdao.close();
 		}
 		
-		response.sendRedirect("Limitadores.jsp");
+		response.sendRedirect("home");
 	}
 
 }

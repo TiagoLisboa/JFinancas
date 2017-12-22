@@ -42,7 +42,6 @@ public class MovimentacaoDAO {
             
             while (rs.next()) {
             	String nome = rs.getString("nome");
-            	System.out.println(nome);
             	int id = rs.getInt("id");
             	float valor = rs.getFloat("valor");
             	Date data = df.parse(rs.getString("data"));

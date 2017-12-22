@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.text.ParseException;
 
@@ -96,8 +95,6 @@ public class UsuarioDAO {
             
             rs.close();
             stmt.close();
-            
-            System.out.println(usr);
             
             if (usr != null)
             	return usr;

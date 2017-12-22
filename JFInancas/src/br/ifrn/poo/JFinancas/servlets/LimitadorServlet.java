@@ -1,6 +1,7 @@
 package br.ifrn.poo.JFinancas.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ifrn.poo.JFinancas.DAO.LimitadorDAO;
 import br.ifrn.poo.JFinancas.DAO.TipoDAO;
+import br.ifrn.poo.JFinancas.DAO.UsuarioDAO;
 import br.ifrn.poo.JFinancas.controle.UsuarioController;
 import br.ifrn.poo.JFinancas.modelo.Meta;
 import br.ifrn.poo.JFinancas.modelo.Registradora;
@@ -49,12 +51,39 @@ public class LimitadorServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		TipoDAO tdao = new TipoDAO();
+		UsuarioDAO udao = new UsuarioDAO();
 		
 		String data1 = request.getParameter("data1");
 		String data2 = request.getParameter("data2");
 		String nome = request.getParameter("nome");
 		float valor = Float.parseFloat(request.getParameter("valor"));
-		Tipo tipo = tdao.getById(new Tipo("", Integer.parseInt(request.getParameter("tipo"))));
+		
+		Tipo ntipo = new Tipo(request.getParameter("tipo"), -1);
+		Tipo tipo = null;
+		try {
+			tipo = tdao.getByName(ntipo);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (tipo == null) {
+			try {
+				tdao.adiciona(ntipo);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		try {
+			tipo = tdao.getByName(ntipo);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String categoria = request.getParameter("categoria");
 		
 		LimitadorDAO ldao = new LimitadorDAO();
@@ -78,7 +107,7 @@ public class LimitadorServlet extends HttpServlet {
 			}
 			
 			
-			r.setLimitadores(ldao.getByIdRegistradora(r));
+			UsuarioController.setActiveUser(udao.login(UsuarioController.getActiveUser()));
 			
 		} catch(ParseException e) {
 			e.printStackTrace();
@@ -87,9 +116,10 @@ public class LimitadorServlet extends HttpServlet {
 		} finally {
 			ldao.close();
 			tdao.close();
+			udao.close();
 		}
 		
-		response.sendRedirect("Limitadores.jsp");
+		response.sendRedirect("home");
 	
 	}
 
