@@ -4,6 +4,7 @@
       br.ifrn.poo.JFinancas.controle.UsuarioController,
       br.ifrn.poo.JFinancas.modelo.Ganho,
       br.ifrn.poo.JFinancas.modelo.Movimentacao,
+      java.math.BigDecimal,
       java.text.SimpleDateFormat" 
 %>
 <% SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy"); %>
@@ -46,14 +47,19 @@
       <thead class="thead-dark">
         <tr>
           <td colspan="2">SALDO INICIAL</td>
-          <td><%= UsuarioController.getActiveUser().getSaldo()%></td>
+          <td>R$ <%
+        		  float saldo = UsuarioController.getActiveUser().getSaldo();
+		          BigDecimal bigsaldo = new BigDecimal(saldo);
+		          bigsaldo = bigsaldo.setScale(2 ,BigDecimal.ROUND_HALF_EVEN);
+          		  out.println(bigsaldo);
+          		%></td>
         </tr>
         <tr>
           <th>Data</th>
           <th>Descrição</th>
           <th>Valor</th>
         </tr>
-                <% float saldo=UsuarioController.getActiveUser().getSaldo(); 
+                <%
   for(Movimentacao l: UsuarioController.getActiveUser().getRegistradora().getMovimentacoes()){
     saldo+=l instanceof Ganho? l.getValor():-l.getValor();
     %>
@@ -63,14 +69,20 @@
           <td data-title="ID"><%= format.format(l.getData())%></td>
           <td data-title="descricao"><%= l.getNome() %> - <%= l.getTipo()%></td>
           <td data-title="value"><%= l instanceof Ganho? "+":"-" %>
-        R$<%= l.getValor()%></td>
+        R$<% 
+        BigDecimal bigvalor = new BigDecimal(l.getValor()).setScale(2 ,BigDecimal.ROUND_HALF_EVEN);
+		  out.println(bigvalor);%></td>
         </tr>
       <%} %>
         </tbody>
         <tfoot>	
         	<tr>
           		<td colspan="2">SALDO FINAL</td>
-          		<td><%= saldo %></td>
+          		<td>R$ <% 
+          		bigsaldo = new BigDecimal(saldo);
+                bigsaldo = bigsaldo.setScale(2 ,BigDecimal.ROUND_HALF_EVEN);
+                out.println(bigsaldo);
+                %></td>
        		</tr>
        	</tfoot>
     </table>
