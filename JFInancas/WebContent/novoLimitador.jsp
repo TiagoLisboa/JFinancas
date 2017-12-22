@@ -25,7 +25,7 @@ if (UsuarioController.getActiveUser() == null) {
 		      <a class="nav-link" href="Extrato.jsp">Extrato</a>
 		    </li>
 		    <li class="nav-item">
-		      <a class="nav-link" href="logout">Desconectar</a>
+		      <a class="nav-link" href="logout">Desconectar <span class="fas fa-sign-out-alt" aria-hidden="true"></span></a>
 		    </li>
 		</nav>
 	</header>

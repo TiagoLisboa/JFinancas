@@ -4,10 +4,17 @@
       br.ifrn.poo.JFinancas.controle.UsuarioController,
       br.ifrn.poo.JFinancas.modelo.Ganho,
       br.ifrn.poo.JFinancas.modelo.Movimentacao,
+      br.ifrn.poo.JFinancas.modelo.Usuario,
       java.math.BigDecimal,
       java.text.SimpleDateFormat" 
 %>
-<% SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy"); %>
+<%
+Usuario usuario = UsuarioController.getActiveUser();
+
+if (usuario == null ) { 
+	response.sendRedirect("home");
+} else {
+SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,7 +30,7 @@
       <a class="navbar-brand" href="home">Home</a>
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link" href="#">Desconectar <span class="fas fa-sign-out-alt" aria-hidden="true"></span></a>
+          <a class="nav-link" href="logout">Desconectar <span class="fas fa-sign-out-alt" aria-hidden="true"></span></a>
         </li>
     </nav>
   </header>
@@ -89,3 +96,5 @@
   </div>
 </body>
 </html>
+
+<% } %>
