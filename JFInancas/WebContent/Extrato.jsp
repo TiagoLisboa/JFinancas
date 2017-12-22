@@ -14,8 +14,7 @@
 	<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
 	<link href="./fontawesome-free-5.0.1/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet">
-	<link href="./css/main.css" rel="stylesheet" type="text/css" />
-	<link href="extrato.css" rel="stylesheet" type="text/css" />
+	<link href="./css/extrato.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
   <header class="page-header">
